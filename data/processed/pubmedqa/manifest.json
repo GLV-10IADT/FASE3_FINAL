@@ -1,0 +1,40 @@
+{
+  "dataset": "PubMedQA",
+  "subset": "PQA-L",
+  "source_url": "https://raw.githubusercontent.com/pubmedqa/pubmedqa/1cbae8e92f72f20c8d3747cbb3bf5bc53554d997/data/ori_pqal.json",
+  "source_revision": "1cbae8e92f72f20c8d3747cbb3bf5bc53554d997",
+  "source_sha256": "8b3276be8942ebbd77f3ddcda12c1749bf0e490045a736fd8438ee40cf37a41d",
+  "repository_license": "MIT",
+  "underlying_article_rights_note": "The repository license does not establish rights for every underlying abstract or source record.",
+  "split_method": "Reproduced upstream seed-0 PQA-L 500/500 holdout; split the cross-validation half by source/content with seed 42, reserving approximately 10% for validation.",
+  "counts": {
+    "train": 449,
+    "validation": 51,
+    "test": 500
+  },
+  "excluded_duplicate_records": 0,
+  "label_counts": {
+    "train": {
+      "yes": 248,
+      "no": 152,
+      "maybe": 49
+    },
+    "validation": {
+      "yes": 28,
+      "no": 17,
+      "maybe": 6
+    },
+    "test": {
+      "yes": 276,
+      "no": 169,
+      "maybe": 55
+    }
+  },
+  "split_sha256": {
+    "train": "0391306ccc8881afb56ce3e8d0ed0c29d9258c04737b61b7a174e451b4c6034b",
+    "validation": "38fa770d73534c165162f497e2bddc0ff6cabbbfad9ef65cbc80169128887520",
+    "test": "5b79eaccb3f19be6b3e2ee8335b60162e36358227dab02f9c4bc786995002a7f"
+  },
+  "pqa_u_used": false,
+  "pqa_a_used": false
+}

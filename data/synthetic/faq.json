@@ -1,0 +1,9 @@
+[
+  {
+    "synthetic": true,
+    "id": "FAQ-SYNTH-001",
+    "question": "Como identificar a origem de um documento neste protótipo?",
+    "answer": "Consulte os metadados source, id, versão e seção associados ao trecho recuperado.",
+    "source": "DOC-SYNTH-001"
+  }
+]

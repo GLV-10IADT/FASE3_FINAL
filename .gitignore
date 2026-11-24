@@ -1,0 +1,14 @@
+__pycache__/
+.pytest_cache/
+.coverage
+htmlcov/
+
+/artifacts/qwen2_5_0_5b_qlora/
+/artifacts/qwen2_5_0_5b_internal_qlora/
+/artifacts/qwen2_5_0_5b_pubmedqa_qlora/
+/artifacts/qwen2_5_0_5b_hybrid_qlora/
+/artifacts/retrieval-embeddings/
+/artifacts/retrieval-index/
+/artifacts/translation/
+/data/raw/medquad/
+/data/processed/hybrid_training/

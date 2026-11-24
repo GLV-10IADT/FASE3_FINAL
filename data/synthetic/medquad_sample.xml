@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document id="DOC-SYNTH-MEDQUAD-001" source="Synthetic" url="https://example.invalid/demo">
+  <Focus>Fixture de demonstração</Focus>
+  <QAPairs>
+    <QAPair pid="1">
+      <Question qid="Q-SYNTH-001" qtype="information">Qual é a finalidade deste arquivo?</Question>
+      <Answer>Este arquivo XML fictício serve apenas para testar o parser.</Answer>
+    </QAPair>
+    <QAPair pid="2">
+      <Question qid="Q-SYNTH-002" qtype="information">Há resposta neste registro fictício?</Question>
+    </QAPair>
+  </QAPairs>
+</Document>

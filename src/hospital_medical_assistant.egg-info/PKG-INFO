@@ -1,0 +1,681 @@
+Metadata-Version: 2.4
+Name: hospital-medical-assistant
+Version: 0.1.0
+Summary: Academic prototype of a source-grounded medical assistant.
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: langchain-core<2.0,>=1.6
+Requires-Dist: langgraph<2.0,>=1.2
+Provides-Extra: test
+Requires-Dist: pytest>=8; extra == "test"
+Requires-Dist: jsonschema<5,>=4.21; extra == "test"
+Provides-Extra: clinical-import
+Requires-Dist: jsonschema<5,>=4.21; extra == "clinical-import"
+Provides-Extra: ui
+Requires-Dist: streamlit<2.0,>=1.42; extra == "ui"
+Provides-Extra: training
+Requires-Dist: numpy==2.5.5; extra == "training"
+Requires-Dist: torch==2.13.0; extra == "training"
+Requires-Dist: transformers==4.57.6; extra == "training"
+Requires-Dist: peft==0.22.0; extra == "training"
+Requires-Dist: accelerate==1.16.0; extra == "training"
+Requires-Dist: bitsandbytes==0.50.2; extra == "training"
+Provides-Extra: translation
+Requires-Dist: ctranslate2==4.9.1; extra == "translation"
+Requires-Dist: sentencepiece==0.2.3; extra == "translation"
+
+# Assistente médico — protótipo acadêmico
+
+Protótipo em Python de um assistente conversacional para explorar recuperação de
+informação médica, consulta controlada a dados sintéticos e pseudonimizados
+autorizados e fluxos de decisão com LangChain e LangGraph. Inclui interfaces
+CLI e Streamlit local, além de um experimento de fine-tuning QLoRA do modelo
+Qwen2.5-0.5B-Instruct com o subconjunto PQA-L do PubMedQA.
+
+Esta é uma prova de conceito acadêmica, não um produto médico. O modelo foi
+treinado com literatura pública, não com protocolos hospitalares, e não tem
+validação clínica. Não use suas respostas para diagnóstico, prescrição, triagem
+ou decisões de atendimento.
+
+## Avisos de uso e limitações
+
+- Não insira dados pessoais ou dados reais de pacientes. Além dos fixtures
+  sintéticos, a demonstração local pode carregar o corpus institucional
+  pseudonimizado autorizado; essa pseudonimização não é anonimização completa.
+  Não versione nem exponha esses arquivos.
+- O protótipo não se conecta a sistemas hospitalares nem a serviços externos
+  para responder consultas. A leitura de paciente usa apenas arquivos locais,
+  após seleção explícita. CLI e interface web são modos locais de operador
+  único, sem autenticação real, e não devem ser expostos à rede.
+- Pedidos que envolvam conduta clínica devem ser revisados por uma pessoa
+  profissional. O sistema não prescreve nem executa ordens clínicas.
+- Alertas são somente registros locais simulados e aguardam revisão humana.
+- Respostas geradas podem estar incorretas ou incompletas. As fontes exibidas
+  ajudam a rastrear o contexto recuperado, mas não garantem correção.
+- A auditoria é demonstrativa e minimizada; não substitui controles
+  institucionais de autenticação, acesso, retenção ou segurança.
+- A avaliação do experimento é exploratória e não demonstra eficácia clínica.
+
+## Recursos e tecnologias utilizados
+
+### Dados e modelo
+
+- **PubMedQA PQA-L:** perguntas e respostas clínicas rotuladas por especialistas
+  e seus abstracts, usados no experimento público de treinamento e avaliação.
+  PQA-A e PQA-U não são usados nessa configuração. Consulte a
+  [página do PubMedQA](https://pubmedqa.github.io/) e os termos aplicáveis aos
+  registros e abstracts.
+- **Dados sintéticos locais:** pacientes, exames, equipe e documentos para
+  testar o fluxo sem dados reais.
+- **Qwen2.5-0.5B-Instruct:** modelo-base com revisão e licença fixadas na
+  configuração de treinamento; o ajuste usa QLoRA NF4.
+- **MedQuAD:** não está incluído no treinamento executado nem é necessário para
+  iniciar a demonstração atual.
+
+### Componentes de software
+
+- **Python 3.11 ou superior** para a aplicação.
+- **LangChain Core** para prompt, interface de modelo e recuperação.
+- **LangGraph** para orquestrar o fluxo conversacional e suas ramificações.
+- **Transformers, PEFT, PyTorch, Accelerate e bitsandbytes** para carregar e
+  ajustar localmente o modelo QLoRA.
+- **CTranslate2, SentencePiece e OPUS-MT** para tradução local português-inglês.
+  Os modelos OPUS-MT usados são distribuídos sob CC BY 4.0; a atribuição é
+  preservada nos artefatos locais.
+- **Streamlit** (opcional) para a interface web local, vinculada somente a
+  `127.0.0.1`.
+- **pytest** para testes automatizados.
+
+## Arquitetura
+
+O fluxo executável está em `src/medical_assistant/workflows/assistant.py`.
+O índice híbrido combina correspondência lexical e embeddings multilíngues
+locais e implementa a interface `BaseRetriever` do LangChain. Quando o chatbot
+é iniciado, o adaptador local é conectado a essa interface; o nó de composição
+usa `ChatPromptTemplate` e `StrOutputParser`. O modelo não é chamado se a
+política de segurança encaminhar o pedido para revisão ou se não houver
+evidência recuperada.
+
+```mermaid
+flowchart TD
+    U[Mensagem do usuário] --> C[Classificar pedido e aplicar política de segurança]
+    C -->|Conduta clínica| R[Encaminhar para revisão humana]
+    C -->|Pergunta informativa| T[Traduzir consulta para inglês localmente, se LLM ativa]
+    T --> S[Buscar pergunta original e tradução]
+    C -->|Consulta de paciente| P[Ler registro local selecionado]
+    P -->|Consulta informativa| T
+    P -->|Verificar exames| E[Verificar exames pendentes]
+    E --> A[Preparar alerta local simulado, se necessário]
+    A --> X[Compor status dos exames]
+    S --> L[Compor resposta com LLM local, se disponível]
+    R --> AU[Auditoria minimizada]
+    X --> AU
+    L --> AU
+```
+
+O chatbot combina documentos sintéticos, abstracts PubMedQA e protocolos
+autorizados no índice geral. A busca híbrida combina tokens lexicais com similaridade
+semântica do modelo local
+[`intfloat/multilingual-e5-small`](https://huggingface.co/intfloat/multilingual-e5-small)
+(MIT, revisão fixada), executado na CPU. Na primeira inicialização, os pesos podem ser baixados do
+Hugging Face para cache local; perguntas e documentos não são enviados ao
+serviço. Na CLI e na interface web, após o gate de segurança, o tradutor OPUS-MT
+converte a pergunta para inglês; a recuperação consulta também a pergunta
+original. Traduções e recuperação semântica podem falhar; confira as fontes e
+mantenha revisão humana.
+O prompt solicita resposta estruturada em português, evidências e limites, com
+até 192 tokens novos. Os identificadores de fonte são validados e anexados pelo
+código após a tradução.
+
+As respostas apresentam status, fontes e estado de revisão humana. A CLI não
+persiste a conversa; a interface web mantém histórico e resultados somente em
+`st.session_state`, durante a sessão do navegador. Eventos de auditoria e
+alertas simulados são gravados em arquivos locais dentro de `artifacts/`.
+`model_invoked` indica chamada ao modelo LLM para geração; `translation_used` e
+`translation_version` registram o uso e a versão do tradutor local;
+`retrieval_version` identifica o modelo de embeddings. Auditoria é transversal
+ao workflow: o diagrama não representa um nó separado do LangGraph.
+
+## Instalação
+
+Execute os comandos abaixo no PowerShell, na raiz do repositório. A instalação
+básica configura a aplicação e os testes:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -e ".[test]"
+```
+
+Execute a suíte de testes:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest
+```
+
+Para habilitar a interface web, instale o extra opcional:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -e ".[ui]"
+```
+
+Para executar somente os sete cenários hospitalares acadêmicos congelados:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q tests\unit\test_hospital_scenarios.py
+```
+
+As dependências básicas estão declaradas em `pyproject.toml`. O fine-tuning e o
+chatbot com o adaptador exigem adicionalmente as dependências de treinamento e
+um ambiente CUDA compatível; veja [Pipeline de treinamento](#pipeline-de-treinamento).
+
+## Como executar o assistente
+
+### Chatbot com protocolos institucionais via RAG
+
+Instale o extra de importação e converta a massa local validada pelo schema:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -e ".[clinical-import]"
+.\.venv\Scripts\python.exe scripts\import_authorized_protocols.py `
+  --institutional-approval-reference "<referência de aprovação>" `
+  --institutional-approved-at "AAAA-MM-DD" `
+  --privacy-review-reference "<referência da revisão>" `
+  --privacy-reviewed-at "AAAA-MM-DD"
+```
+
+Os dois conversores validam `data\massa_dados_protocolos_prontuarios.json`
+usando `data\schema_protocolos_prontuarios.json`:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\import_authorized_patient_records.py `
+  --institutional-approval-reference "<referência de aprovação>" `
+  --institutional-approved-at "AAAA-MM-DD" `
+  --privacy-review-reference "<referência da revisão>" `
+  --privacy-reviewed-at "AAAA-MM-DD"
+```
+
+O conversor de protocolos gera
+`data\processed\protocolos_institucionais_autorizados.jsonl`; o conversor de
+prontuários gera `data\processed\prontuarios_autorizados.jsonl`. O segundo
+omite nome, CNS, CPF, data de nascimento e identificação do profissional,
+reduz idade a faixa etária e redige alguns padrões conhecidos. O JSONL ainda
+contém informação clínica sensível: isso é pseudonimização, não anonimização
+completa. A revisão humana dos textos livres continua necessária. Os dois
+arquivos derivados e a massa original são ignorados pelo Git. Os metadados de
+aprovação/revisão são declarações fornecidas pelo operador, não verificação
+independente. Os conversores não sobrescrevem saídas existentes; use um destino
+novo com `--output` para gerar outra versão.
+
+O chatbot carrega protocolos no índice geral. Prontuários não entram na busca
+geral: `/prontuarios` lista aliases (`CASE-001`, etc.) e somente o prontuário
+selecionado com `/paciente CASE-001` é acrescentado ao contexto daquela sessão.
+`/paciente limpar` remove o contexto. A CLI é modo local de operador único, com
+identidade fixa de demonstração e sem autenticação real; não exponha na rede nem
+use como sistema assistencial. A seleção explícita não substitui controles de
+acesso institucionais. A ingestão não retreina a LLM.
+
+Inicie o chatbot após gerar os dois JSONL. Por padrão, protocolos entram no
+índice RAG geral e prontuários no store separado; use
+`--approved-protocols` e `--approved-patient-records` para caminhos alternativos:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\chatbot_assistente.py
+```
+
+O chatbot carrega o modelo-base e o adaptador QLoRA do PubMedQA. Antes de
+iniciá-lo, instale os extras de treinamento e tradução e prepare os modelos
+OPUS-MT conforme a etapa de tradução no
+[pipeline](#pipeline-de-treinamento). A primeira execução pode baixar o
+modelo-base público fixado na configuração e os pesos fixados do embedder
+multilíngue. O download do embedder é somente de pesos públicos; a busca roda
+localmente. O adaptador deve existir em
+`artifacts\qwen2_5_0_5b_pubmedqa_qlora\adapter`. Se estiver ausente ou for
+incompatível com o modelo-base, a inicialização falha: o programa não troca
+silenciosamente para mock nem para o modelo-base sem ajuste.
+
+Com os modelos OPUS-MT locais preparados, perguntas em português são traduzidas
+para inglês antes da busca nos abstracts. A busca também usa o texto original
+para não perder documentos sintéticos em português. A LLM ajustada responde com
+base nas fontes; OPUS-MT traduz o texto final para português e o código adiciona
+as citações depois da tradução. Tudo roda localmente; nenhum serviço externo
+recebe a consulta. Uma tradução incorreta pode afetar a recuperação ou alterar
+o sentido da resposta.
+
+Para avaliar a recuperação nos protocolos, prepare um JSONL de perguntas
+revisadas por um profissional, com pelo menos um caso por protocolo, em
+`data/evaluation/protocol_retrieval_cases.jsonl`. O formato de cada linha é
+`{"query":"pergunta revisada","expected_source_ids":["ID_DA_FONTE"]}`. O arquivo
+fica fora do Git. Execute
+`.\.venv\Scripts\python.exe scripts\evaluate_protocol_retrieval.py`; o relatório
+compara o baseline lexical à busca híbrida usando Recall@k, taxa de acerto e MRR
+agregados, sem imprimir as perguntas. Os limiares iniciais são 0,5 lexical e
+0,55 semântico; calibre-os somente com casos revisados. Essas métricas medem
+recuperação, não correção clínica da resposta.
+
+Na sessão, use os comandos e perguntas abaixo:
+
+```text
+/ajuda
+/atendimento
+/prontuarios
+/paciente CASE-001
+/paciente PATIENT-SYNTH-001
+Qual é o status do exame?
+/exames
+/paciente limpar
+/sair
+```
+
+O terminal usa cores quando está interativo; defina `NO_COLOR=1` para
+desativá-las. `/ajuda` mostra os comandos e as instruções de segurança. O
+inicializador filtra somente dois avisos de depreciação conhecidos das
+dependências LangSmith/PEFT; outros avisos e erros continuam visíveis.
+
+`/atendimento` inicia uma entrevista guiada com confirmação explícita de que o
+caso é fictício. Ela coleta faixa etária, queixa, sintomas, duração, histórico e
+exames já feitos; não peça nome, data de nascimento ou identificadores. O
+resumo é mantido apenas durante a sessão e não é incluído na auditoria. Com
+fontes suficientes, a LLM lista possibilidades e exames mencionados nos textos
+recuperados para revisão profissional — não diagnostica, não solicita exames e
+não substitui avaliação clínica. Sinais de urgência reconhecidos pela política
+heurística interrompem a geração; isso não é triagem confiável.
+
+Exemplo de consulta em português sobre o corpus PubMedQA:
+
+```text
+Qual é o papel das mitocôndrias na morte celular programada da planta lace plant?
+```
+
+O chatbot deve exibir uma resposta em português e a fonte recuperada, ou indicar
+falta de evidência. Essa demonstração não valida a correção clínica da resposta.
+
+`/paciente` seleciona um registro local para a sessão. `/exames` consulta os
+exames do registro selecionado e pode registrar um alerta somente simulado,
+aguardando revisão humana. Para perguntas comuns, digite a pergunta em
+português.
+
+`staff.json` contém uma identidade fixa de demonstração, não autenticação real.
+O índice de recuperação inclui abstracts PQA-L dos diferentes splits,
+inclusive o split de teste; portanto, não interprete os resultados de busca
+como uma avaliação independente de generalização.
+
+### Interface web local
+
+Depois de preparar os mesmos dados locais, o adaptador QLoRA e os modelos
+OPUS-MT exigidos pela CLI, inicie o Streamlit:
+
+```powershell
+.\.venv\Scripts\python.exe -m streamlit run scripts\chatbot_web.py
+```
+
+A aplicação oferece abas para perguntas, entrevista com caso sintético e
+verificação de exames do prontuário explicitamente selecionado. O runtime
+compartilhado usa o mesmo `AssistantWorkflow` da CLI. O histórico e os
+resultados ficam somente na sessão do navegador; use **Limpar conversa** ou
+**Limpar contexto do paciente** ao terminar. Fontes de prontuário não exibem
+trechos, identificadores internos nem outros metadados clínicos na interface.
+O caso sintético é um formulário separado do contexto de paciente. A tela
+inicial aparece antes de carregar os pesos; clique em **Carregar assistente
+local** para iniciar o runtime.
+
+O arquivo `.streamlit\config.toml` mantém o servidor em `127.0.0.1` e desativa
+a telemetria de uso. A aplicação é para operador único, não tem autenticação
+real e não deve ser exposta à rede. A primeira inicialização pode demorar
+enquanto carrega o modelo local e baixa pesos públicos necessários; falhas de
+configuração ou de carregamento são apresentadas sem fallback silencioso.
+
+### Demonstração sem LLM
+
+Para verificar rapidamente o fluxo com respostas determinísticas e fixtures
+sintéticos, sem carregar o modelo:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\demo_assistente.py
+```
+
+Essa demonstração não testa a LLM ajustada. Ela grava auditoria minimizada em
+`artifacts\demo-assistente-audit.jsonl`.
+
+Para testar apenas uma consulta informativa diretamente pela API Python, rode
+este exemplo na raiz do repositório:
+
+```powershell
+@'
+from pathlib import Path
+
+from medical_assistant.audit import AuditActor, JsonlAuditLogger
+from medical_assistant.patient_data import SyntheticPatientStore
+from medical_assistant.retrieval import DocumentIndex, load_synthetic_documents
+from medical_assistant.workflows import AssistantWorkflow
+
+root = Path.cwd()
+workflow = AssistantWorkflow(
+    DocumentIndex(load_synthetic_documents(root / "data" / "synthetic")),
+    SyntheticPatientStore(root / "data" / "synthetic" / "patients.json"),
+    JsonlAuditLogger(root / "artifacts" / "readme-demo-audit.jsonl"),
+)
+result = workflow.run(
+    "Como identificar origem metadados de um trecho?",
+    actor=AuditActor(user_id="demo-clinician", role="clinician"),
+)
+print("Status:", result.status.value)
+if result.response is not None:
+    print("Resposta:", result.response.answer)
+    print("Fontes:", [source.source_id for source in result.response.sources])
+'@ | .\.venv\Scripts\python.exe -
+```
+
+## Pipeline de treinamento
+
+O pipeline público baixa e prepara o PubMedQA PQA-L, valida e separa os
+registros, ajusta o modelo com QLoRA e salva o adaptador e o resumo da
+avaliação. O chatbot usa esse adaptador, mas não treina novamente ao iniciar.
+
+### 1. Instalar dependências de treinamento
+
+No Windows, a configuração validada usa Python 3.14.7, PyTorch 2.13.0 com
+CUDA 13.0 e uma NVIDIA GTX 1650 com 4 GiB. Em um ambiente novo:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r training\requirements-cu130.txt
+.\.venv\Scripts\python.exe -m pip install -e ".[training,translation,test]"
+```
+
+O treinamento completo exige uma GPU CUDA compatível e memória suficiente; a
+viabilidade do experimento completo não foi garantida para todo hardware. Para
+validar a instalação com um experimento mínimo sintético, antes de baixar dados:
+
+```powershell
+.\.venv\Scripts\python.exe -m medical_assistant.training.runner --smoke-test
+```
+
+### 2. Baixar e preparar o PubMedQA PQA-L
+
+Este passo é necessário em um checkout que ainda não tenha os dados locais:
+
+```powershell
+New-Item -ItemType Directory -Force data\raw\pubmedqa | Out-Null
+Invoke-WebRequest `
+  -Uri "https://raw.githubusercontent.com/pubmedqa/pubmedqa/1cbae8e92f72f20c8d3747cbb3bf5bc53554d997/data/ori_pqal.json" `
+  -OutFile data\raw\pubmedqa\ori_pqal.json
+.\.venv\Scripts\python.exe -m medical_assistant.datasets.prepare_pubmedqa
+```
+
+O preparador verifica a origem e os dados, e não sobrescreve saídas existentes.
+Os dados brutos e processados ficam locais e são ignorados pelo Git. O teste
+oficial é reservado para avaliação.
+
+### 3. Executar o fine-tuning e a avaliação
+
+```powershell
+.\.venv\Scripts\python.exe -m medical_assistant.training.runner `
+  --config training\configs\qwen2_5_0_5b_pubmedqa_qlora.json
+```
+
+A configuração usa Qwen2.5-0.5B-Instruct com QLoRA NF4 por 100 passos. Os
+artefatos são salvos em
+`artifacts\qwen2_5_0_5b_pubmedqa_qlora\`, incluindo o adaptador em `adapter`
+e o `experiment_summary.json`. Para retomar a avaliação de um checkpoint
+existente, consulte o comando de retomada na seção
+[Experimento PubMedQA PQA-L](#experimento-pubmedqa-pqa-l).
+
+### 4. Iniciar o chatbot com o adaptador
+
+Prepare os dois tradutores locais (aproximadamente 136 MB no total). Os modelos
+são baixados de Argos/OPUS-MT, verificados por SHA-256 e armazenados em
+`artifacts\translation\` (ignorado pelo Git). A primeira etapa precisa de
+conexão para baixar os pacotes; as perguntas e respostas não são enviadas a
+serviços externos:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\prepare_translation_models.py
+```
+
+O script preserva os arquivos de atribuição CC BY 4.0 junto aos modelos e
+recusa sobrescrever o diretório de saída. Após o adaptador QLoRA e os
+tradutores estarem preparados e o corpus aprovado ter sido convertido, inicie:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\chatbot_assistente.py
+```
+
+O modelo-base fixado pode ser baixado na primeira execução. Os detalhes do
+experimento concluído, métricas e limitações estão em
+[specs/avaliacao.md](specs/avaliacao.md) e
+[specs/relatorio-tecnico.md](specs/relatorio-tecnico.md).
+
+## Estrutura do repositório
+
+- `src/medical_assistant/`: aplicação, recuperação, segurança, auditoria,
+  workflow e treinamento.
+- `scripts/`: CLI, interface web Streamlit, importadores e demonstração
+  determinística.
+- `training/configs/`: configurações do modelo e dos experimentos.
+- `training/synthetic/` e `data/synthetic/`: dados fictícios para testes e demo.
+- `data/raw/` e `data/processed/`: dados locais e derivados, ignorados pelo Git.
+- `specs/`: plano, tarefas, avaliação, relatório e roteiro de apresentação.
+- `specs/roteiro-apresentacao.md`: demonstração em duas pessoas, com duração
+  prevista de 13 minutos.
+
+## Preparação opcional de corpus institucional
+
+Não adicione corpus hospitalar ao Git. O arquivo de origem deve ficar em
+`data/corpus_institucional_aprovado.jsonl`, caminho local ignorado. Obtenha a
+aprovação institucional, os direitos de uso e a revisão de privacidade antes
+de prosseguir. Os valores de aprovação passados ao script devem ser referências
+reais emitidas pela instituição; não use os exemplos nem invente referências.
+
+O pré-processamento é local e remove apenas padrões comuns de identificadores;
+não é anonimização completa. Substitua os valores indicados pelas referências
+autorizadas e execute:
+
+```powershell
+$env:INSTITUTIONAL_APPROVAL_REFERENCE = "<referência institucional>"
+$env:INSTITUTIONAL_APPROVED_AT = "YYYY-MM-DD"
+$env:USAGE_RIGHTS_REFERENCE = "<referência dos direitos de uso>"
+@'
+import os
+from pathlib import Path
+
+from medical_assistant.datasets import preprocess_approved_internal_jsonl
+
+report = preprocess_approved_internal_jsonl(
+    Path("data/corpus_institucional_aprovado.jsonl"),
+    Path("data/processed/corpus_institucional_revisao_privacidade.jsonl"),
+    institutional_approval_reference=os.environ["INSTITUTIONAL_APPROVAL_REFERENCE"],
+    institutional_approved_at=os.environ["INSTITUTIONAL_APPROVED_AT"],
+    usage_rights_reference=os.environ["USAGE_RIGHTS_REFERENCE"],
+)
+print("Registros processados:", report["records_processed"])
+print("Registros de prontuário excluídos:", report["records_excluded_patient_records"])
+print("Revisão humana necessária:", report["human_review_required"])
+'@ | .\.venv\Scripts\python.exe -
+```
+
+Se o arquivo de saída já existir, o preprocessador recusará sobrescrevê-lo;
+escolha um novo nome versionado em `data/processed/`.
+
+Antes de criar splits, um revisor autorizado deve inspecionar cada registro
+processado, incluindo pergunta, resposta e metadados, usando ambiente aprovado
+pela instituição. Não envie o conteúdo a serviços externos. Remova registros
+com identificadores residuais, dados de pacientes ou origem/direitos incertos.
+Somente depois da aprovação humana por registro preencha `privacy_review_status`,
+`privacy_review_reference`, `privacy_reviewed_at`, `contains_patient_data`,
+`preprocessing_review_required` e `review_status` na cópia revisada. Não faça
+uma substituição em massa para aprovar todos os registros. O loader valida
+essas declarações, mas não examina nem certifica o texto.
+
+Valide a cópia revisada e gere splits agrupados por fonte/conteúdo (seed 42,
+10% validação, 20% teste):
+
+```powershell
+@'
+from pathlib import Path
+
+from medical_assistant.datasets import (
+    export_training_splits,
+    load_approved_internal_jsonl,
+    split_records,
+)
+
+reviewed = load_approved_internal_jsonl(
+    Path("data/processed/corpus_institucional_revisado.jsonl")
+)
+splits = split_records(
+    reviewed.records,
+    seed=42,
+    validation_fraction=0.1,
+    test_fraction=0.2,
+)
+paths = export_training_splits(splits, Path("data/processed"))
+print("Contagens:", {
+    "train": len(splits.train),
+    "validation": len(splits.validation),
+    "test": len(splits.test),
+    "excluded": len(splits.excluded),
+})
+print("Arquivos:", [str(path) for path in paths])
+'@ | .\.venv\Scripts\python.exe -
+```
+
+`export_training_splits` não sobrescreve splits existentes; use um diretório
+vazio e atualize os caminhos na configuração se necessário. Os dados e splits
+locais são ignorados pelo Git.
+
+## Configuração do experimento de fine-tuning
+
+A configuração de QLoRA está em `training/configs/qwen2_5_0_5b_qlora.json`.
+Ela fixa a revisão do modelo, licença, seed, limites de treino e política de
+splits. O smoke test foi executado com sucesso na NVIDIA GTX 1650 (4 GiB),
+PyTorch 2.13.0+cu130 e bitsandbytes 0.50.2: 4 exemplos sintéticos de treino,
+1 passo, perda de treino 3.187 e perda de validação 2.290. O teste congelado
+foi usado apenas para gerar a predição baseline e a predição após o ajuste.
+Esses números validam a execução técnica; não medem qualidade clínica nem
+demonstram melhora do modelo. O experimento completo com PubMedQA PQA-L e seus
+resultados estão descritos na seção própria abaixo. Não usar dados clínicos
+reais nesta configuração.
+
+Para habilitar treinamento com CUDA no Windows, instale a wheel CUDA
+correspondente antes do extra de treinamento. O arquivo
+`training/requirements-cu130.txt` fixa PyTorch 2.13.0 com CUDA 13.0; essa
+configuração foi validada com Python 3.14.7 e uma NVIDIA GTX 1650. Em um
+ambiente `.venv` recém-criado:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r training\requirements-cu130.txt
+.\.venv\Scripts\python.exe -m pip install -e ".[training,test]"
+.\.venv\Scripts\python.exe -m medical_assistant.training.runner --smoke-test
+```
+
+Se o extra `.[test]` já tiver sido instalado, não recrie o ambiente; execute
+somente os dois comandos de instalação de dependências acima e o smoke test.
+O extra `training` declara as demais dependências Python; o arquivo CUDA
+substitui o PyTorch padrão pela variante compatível com essa configuração.
+O smoke test aceita exclusivamente os pequenos splits sintéticos em
+`training/synthetic/`, valida ausência de vazamento e executa um passo de treino.
+Para o experimento completo, preparar os splits públicos permitidos em
+`data/processed/` e executar sem `--smoke-test`.
+Protocolos, FAQs e modelos internos só poderão ser usados depois de aprovação
+institucional, desidentificação e curadoria. Não há dados hospitalares neste
+repositório; prontuários e dados pessoais reais não são aceitos pelo smoke test.
+O resumo detalhado do smoke test é gravado em
+`artifacts/qwen2_5_0_5b_qlora/experiment_summary.json` (saída local ignorada
+pelo Git).
+
+### Experimento institucional exploratório
+
+Há uma configuração separada em
+`training/configs/qwen2_5_0_5b_internal_qlora.json`. Ela aponta para os três
+splits locais validados e executa 100 passos. Nesta entrega acadêmica, esses
+registros são uma amostra local de demonstração; não houve acesso a hospital nem
+uso de prontuários/dados reais. Metadados de aprovação exercitam o contrato do
+loader, mas não representam autorização institucional real. Para uso futuro de
+documentos institucionais, seria necessária aprovação e revisão de privacidade.
+Instale as dependências CUDA acima e execute:
+
+```powershell
+.\.venv\Scripts\python.exe -m medical_assistant.training.runner `
+  --config training\configs\qwen2_5_0_5b_internal_qlora.json
+```
+
+O resumo e o adaptador são gravados em
+`artifacts/qwen2_5_0_5b_internal_qlora/` (ignorado pelo Git). A execução local
+com 10 registros (7 treino, 1 validação, 2 teste) completou tecnicamente, mas
+apresentou sobreajuste e métricas sem valor estatístico. Consulte o
+[relatório técnico](specs/relatorio-tecnico.md); o modelo não está aprovado
+para uso assistencial. A execução de treino e avaliação não certifica
+anonimização nem eficácia clínica.
+
+### Experimento PubMedQA PQA-L
+
+O experimento público usa somente o subconjunto PQA-L, rotulado por
+especialistas, obtido de uma revisão fixada do repositório oficial. PQA-A e
+PQA-U não são usados. O arquivo bruto e os splits ficam em diretórios ignorados
+pelo Git; a preparação verifica SHA-256 e preserva o teste oficial de 500
+registros como avaliação-only. A metade de validação cruzada é agrupada por
+fonte/conteúdo em treino e validação. O manifesto local registra revisão,
+hashes, contagens e transformações.
+
+Em um checkout limpo, baixe apenas o arquivo PQA-L da revisão registrada e
+prepare os splits:
+
+```powershell
+New-Item -ItemType Directory -Force data\raw\pubmedqa | Out-Null
+Invoke-WebRequest `
+  -Uri "https://raw.githubusercontent.com/pubmedqa/pubmedqa/1cbae8e92f72f20c8d3747cbb3bf5bc53554d997/data/ori_pqal.json" `
+  -OutFile data\raw\pubmedqa\ori_pqal.json
+.\.venv\Scripts\python.exe -m medical_assistant.datasets.prepare_pubmedqa
+```
+
+O preparador recusa sobrescrever saídas existentes; use um diretório de saída
+novo e ajuste os caminhos `data.train`, `data.validation` e `data.test` na
+configuração se precisar refazer a preparação. Com o ambiente CUDA de
+treinamento configurado, execute o experimento separado do corpus institucional:
+
+```powershell
+.\.venv\Scripts\python.exe -m medical_assistant.training.runner `
+  --config training\configs\qwen2_5_0_5b_pubmedqa_qlora.json
+```
+
+A configuração usa Qwen2.5-0.5B-Instruct com QLoRA NF4 por 100 passos; os
+abstracts são fornecidos como contexto no treino e na avaliação, e a recuperação
+RAG indexa contextos, não respostas de referência. Os números do experimento e
+limitações ficam em [avaliação](specs/avaliacao.md) e no
+[relatório técnico](specs/relatorio-tecnico.md). O resultado é exploratório,
+não valida desempenho clínico. A licença MIT do repositório PubMedQA não
+estabelece automaticamente direitos de redistribuição de cada abstract ou
+registro subjacente; verifique os termos aplicáveis e não versione os dados.
+
+Execução F06 concluída em 2026-11-22: 449 exemplos de treino, 51 de validação
+e os 500 registros oficiais de teste usados apenas para avaliação; QLoRA NF4,
+rank 8, 100 passos, modelo Qwen2.5-0.5B-Instruct com revisão fixada. No teste,
+Token F1 foi 0,118513 para o modelo-base bruto, 0,017366 com gate, 0,200031
+para RAG e 0,218834 para fine-tuning + RAG. O relatório completo está em
+[avaliação](specs/avaliacao.md); essas métricas não medem correção clínica.
+O índice RAG inclui abstracts dos três splits, inclusive o teste, portanto as
+métricas de recuperação/citação não são uma estimativa independente.
+
+Uma execução real da CLI carregou o adaptador
+`qwen2.5-0.5b-pubmedqa-pqal-qlora-v1` (hash curto
+`1d1f4b44cc4079a2`), registrou `model_invoked=true` na consulta com fixture
+sintético e gerou fontes. A resposta foi genérica e não enumerou os exames;
+`/exames` mostrou os estados estruturados e criou somente alerta local simulado,
+aguardando revisão humana. A resposta gerada não deve ser interpretada como
+resultado clínico.
+
+Se uma execução tiver parado após salvar `checkpoint-100`, sem gravar o resumo,
+é possível retomá-la para concluir a avaliação sem repetir os passos de treino:
+
+```powershell
+.\.venv\Scripts\python.exe -m medical_assistant.training.runner `
+  --config training\configs\qwen2_5_0_5b_pubmedqa_qlora.json `
+  --resume-from-checkpoint artifacts\qwen2_5_0_5b_pubmedqa_qlora\checkpoint-100
+```
+
+Não coloque dados pessoais, prontuários ou segredos neste repositório. Consulte
+o [plano de desenvolvimento](specs/plano-desenvolvimento.md),
+[backlog](specs/tasks.md) e o
+[relatório técnico](specs/relatorio-tecnico.md) antes de adicionar datasets ou
+integrações.

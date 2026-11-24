@@ -1,0 +1,58 @@
+{
+  "manifest_version": 1,
+  "checked_at": "2026-11-23",
+  "decisions": {
+    "PQA-U": "excluded_from_mvp; it is unlabeled and no unsupervised experiment is planned for the first version."
+  },
+  "datasets": [
+    {
+      "name": "PubMedQA",
+      "project_url": "https://pubmedqa.github.io/",
+      "repository_url": "https://github.com/pubmedqa/pubmedqa",
+      "repository_license": "MIT",
+      "license_review": "The repository license does not by itself establish rights for every underlying abstract or source record; verify applicable source terms before redistribution.",
+      "planned_subsets": ["PQA-L"],
+      "optional_subsets": ["PQA-A", "PQA-U"],
+      "status": "downloaded_local_ignored",
+      "revision": "1cbae8e92f72f20c8d3747cbb3bf5bc53554d997",
+      "downloaded_at": "2026-11-22",
+      "sha256": "8b3276be8942ebbd77f3ddcda12c1749bf0e490045a736fd8438ee40cf37a41d",
+      "local_path": "data/raw/pubmedqa/ori_pqal.json",
+      "transformations": [
+        "PQA-L only; source JSON order is retained for the upstream split protocol.",
+        "The upstream seed-0 500/500 holdout is reproduced; the CV half is grouped by source/content with seed 42 into train and validation.",
+        "Whitespace is normalized by the PubMedQA loader; PQA-A and PQA-U are not used."
+      ],
+      "notes": "PQA-L is expert-labeled. The repository MIT license does not establish rights for every underlying abstract/source record; verify applicable source terms before redistribution. PQA-A is artificially generated and train-only if separately approved; PQA-U is unlabeled and excluded. Preserve the official evaluation half."
+    },
+    {
+      "name": "MedQuAD",
+      "project_url": "https://github.com/abachaa/MedQuAD",
+      "repository_license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_review": "Preserve attribution and source metadata. Follow the repository notice that answers are removed from three MedlinePlus-related subsets; do not reconstruct or crawl those answers without permission.",
+      "status": "downloaded_local_ignored",
+      "revision": "577bd37b96c02d1833b2c9eed2de9f96964e96cb",
+      "downloaded_at": "2026-11-23",
+      "sha256": "161d948f8ce8f82accca1f5769a512dff2a01af2b3004d48f2b3da2758a38a09",
+      "local_path": "data/raw/medquad/MedQuAD-577bd37b96c02d1833b2c9eed2de9f96964e96cb/",
+      "archive_path": "data/raw/medquad/medquad-577bd37b96c02d1833b2c9eed2de9f96964e96cb.zip",
+      "excluded_subsets": [
+        "10_MPlus_ADAM_QA",
+        "11_MPlusDrugs_QA",
+        "12_MPlusHerbsSupplements_QA"
+      ],
+      "eligible_xml_documents": 5497,
+      "records_loaded": 16423,
+      "records_missing_answers_skipped": 5,
+      "empty_documents_skipped": 6,
+      "excluded_xml_files": 5777,
+      "transformations": [
+        "Pinned to repository revision 577bd37b96c02d1833b2c9eed2de9f96964e96cb; archive SHA-256 recorded.",
+        "Excluded the three MedlinePlus-related subsets named in the repository copyright notice.",
+        "Use only XML records with non-empty answers; preserve source URL, NIH source, question type, and focus."
+      ],
+      "notes": "The official repository declares CC BY 4.0 and requests attribution. Its README says answers are removed from the three excluded subsets; no answers are reconstructed or crawled. Public educational content is not a hospital protocol."
+    }
+  ]
+}

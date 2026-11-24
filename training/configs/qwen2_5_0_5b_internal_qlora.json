@@ -1,0 +1,79 @@
+{
+  "config_version": 1,
+  "experiment_id": "qwen2.5-0.5b-hospital-internal-qlora-v1",
+  "model": {
+    "repository": "Qwen/Qwen2.5-0.5B-Instruct",
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "parameters": "0.49B",
+    "license": "Apache-2.0",
+    "model_card": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct",
+    "license_at_pinned_revision": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct/blob/7ae557604adf67be50417f59c2c2f167def9a775/LICENSE",
+    "revision_verified_at": "2026-11-22",
+    "max_context_tokens": 32768
+  },
+  "method": {
+    "name": "QLoRA",
+    "quantization": {
+      "load_in_4bit": true,
+      "quant_type": "nf4",
+      "double_quantization": true,
+      "compute_dtype": "float16"
+    },
+    "lora": {
+      "rank": 8,
+      "alpha": 16,
+      "dropout": 0.05,
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ]
+    }
+  },
+  "training": {
+    "seed": 42,
+    "max_sequence_length": 512,
+    "per_device_train_batch_size": 1,
+    "gradient_accumulation_steps": 8,
+    "gradient_checkpointing": true,
+    "max_train_samples": 512,
+    "max_steps": 100,
+    "learning_rate": 0.0002,
+    "lr_scheduler_type": "cosine",
+    "warmup_ratio": 0.03,
+    "weight_decay": 0.01,
+    "max_grad_norm": 0.3,
+    "optimizer": "paged_adamw_8bit",
+    "fp16": true,
+    "bf16": false,
+    "evaluation_strategy": "steps",
+    "evaluation_steps": 50,
+    "save_steps": 50,
+    "logging_steps": 10
+  },
+  "data": {
+    "train": "data/processed/train.jsonl",
+    "validation": "data/processed/validation.jsonl",
+    "test": "data/processed/test.jsonl",
+    "allowed_sources": [
+      "Institutionally approved and privacy-reviewed hospital_protocol, hospital_faq, or hospital_template records"
+    ],
+    "prohibited_sources": [
+      "Real patient records or identifiable health data"
+    ],
+    "test_usage": "evaluation only; never used for training, prompt selection, or checkpoint selection"
+  },
+  "runtime": {
+    "host_platform": "Windows",
+    "available_gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_mib": 4095,
+    "smoke_test_verified": true,
+    "full_training_feasibility_verified": false,
+    "fallback": "If CUDA/QLoRA dependencies are incompatible or memory is insufficient, use an institution-approved GPU environment with approved data only."
+  },
+  "output_dir": "artifacts/qwen2_5_0_5b_internal_qlora"
+}

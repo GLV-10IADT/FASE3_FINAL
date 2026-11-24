@@ -1,0 +1,30 @@
+{
+  "PMID-SYNTH-001": {
+    "synthetic": true,
+    "QUESTION": "Qual identificador aparece neste exemplo fictício?",
+    "CONTEXTS": [
+      "Contexto sintético para testar a leitura do formato PubMedQA."
+    ],
+    "LABELS": ["BACKGROUND"],
+    "MESHES": [],
+    "YEAR": "2026",
+    "reasoning_required_pred": "yes",
+    "reasoning_free_pred": "yes",
+    "final_decision": "yes",
+    "LONG_ANSWER": "Este registro é sintético e serve somente para testar o parser."
+  },
+  "PMID-SYNTH-002": {
+    "synthetic": true,
+    "QUESTION": "Este exemplo fictício está marcado como talvez?",
+    "CONTEXTS": [
+      "Segundo contexto sintético para validar o rótulo maybe."
+    ],
+    "LABELS": ["RESULTS"],
+    "MESHES": [],
+    "YEAR": "2026",
+    "reasoning_required_pred": "maybe",
+    "reasoning_free_pred": "maybe",
+    "final_decision": "maybe",
+    "LONG_ANSWER": "Resposta fictícia para teste automatizado, sem conteúdo clínico."
+  }
+}

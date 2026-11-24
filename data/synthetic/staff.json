@@ -1,0 +1,17 @@
+[
+  {
+    "synthetic": true,
+    "user_id": "demo-clinician",
+    "role": "clinician",
+    "authorized_patient_ids": [
+      "PATIENT-SYNTH-001",
+      "PATIENT-SYNTH-002"
+    ]
+  },
+  {
+    "synthetic": true,
+    "user_id": "demo-guest",
+    "role": "guest",
+    "authorized_patient_ids": []
+  }
+]

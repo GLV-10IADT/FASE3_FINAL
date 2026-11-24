@@ -1,0 +1,2204 @@
+{
+  "$schema": "./schema_protocolos_prontuarios.json",
+  "aviso_legal": "This is for informational purposes only. For medical advice or diagnosis, consult a professional. AI responses may include mistakes.",
+  "metadata": {
+    "versao_schema": "2.4.0",
+    "padrao_terminologia": [
+      "CID-10",
+      "TUSS",
+      "DCB",
+      "HL7-FHIR-BR"
+    ],
+    "gerado_em": "2026-11-22T22:45:00-03:00",
+    "total_protocolos": 6,
+    "total_prontuarios": 25,
+    "unidade_origem": {
+      "cnes": "2077485",
+      "nome": "Hospital e Pronto-Socorro Central SP",
+      "municipio": "São Paulo - SP"
+    }
+  },
+  "protocolos_clinicos": [
+    {
+      "protocolo_id": "PROT-SEPSE-2026",
+      "titulo": "Protocolo Gerenciado de Sepse no Adulto (Pacote de 1 Hora)",
+      "especialidade": "Terapia Intensiva / Emergência",
+      "versao": "4.0",
+      "cid10_relacionados": [
+        "A41.9",
+        "R65.2",
+        "J18.9",
+        "N39.0"
+      ],
+      "criterios_inclusao": [
+        "Suspeita ou confirmação de foco infeccioso",
+        "Dois ou mais critérios de SIRS ou qSOFA >= 2 (FR >= 22 irpm, PAS <= 100 mmHg, alteração do nível de consciência)"
+      ],
+      "etapas": [
+        {
+          "ordem": 1,
+          "acao": "Coleta de Lactato Arterial e Hemoculturas (2 pares) antes do antibiótico",
+          "prazo_minutos": 30,
+          "codigos_tuss": [
+            "40302190",
+            "40310124"
+          ]
+        },
+        {
+          "ordem": 2,
+          "acao": "Administração de Antimicrobiano de amplo espectro endovenoso",
+          "prazo_minutos": 60,
+          "codigos_tuss": [
+            "20104073"
+          ]
+        },
+        {
+          "ordem": 3,
+          "acao": "Reposição volêmica com 30 mL/kg de cristaloide se hipotensão ou lactato >= 4 mmol/L",
+          "prazo_minutos": 60,
+          "codigos_tuss": [
+            "20104081"
+          ]
+        }
+      ],
+      "prescricao_padrao": [
+        {
+          "dcb": "Ceftriaxona sódica",
+          "dose": "2g",
+          "via": "EV",
+          "frequencia": "1x ao dia"
+        },
+        {
+          "dcb": "Cloreto de sódio 0,9%",
+          "dose": "1000mL",
+          "via": "EV",
+          "frequencia": "Em bolus rápido conforme peso"
+        }
+      ]
+    },
+    {
+      "protocolo_id": "PROT-AVC-ISQ-2026",
+      "titulo": "Protocolo de Acidente Vascular Cerebral Isquêmico Agudo",
+      "especialidade": "Neurologia / Emergência",
+      "versao": "3.2",
+      "cid10_relacionados": [
+        "I63.9",
+        "I64",
+        "G45.9"
+      ],
+      "criterios_inclusao": [
+        "Déficit neurológico focal súbito (Escala de Cincinnati positiva)",
+        "Início dos sintomas (último momento visto bem) há menos de 4,5 horas para trombólise"
+      ],
+      "etapas": [
+        {
+          "ordem": 1,
+          "acao": "Glicemia capilar imediata e aplicação da escala NIHSS",
+          "prazo_minutos": 10,
+          "codigos_tuss": [
+            "40302041"
+          ]
+        },
+        {
+          "ordem": 2,
+          "acao": "Tomografia Computadorizada de Crânio sem contraste",
+          "prazo_minutos": 25,
+          "codigos_tuss": [
+            "41001010"
+          ]
+        },
+        {
+          "ordem": 3,
+          "acao": "Infusão de Alteplase (rt-PA) se ausência de hemorragia e critérios preenchidos",
+          "prazo_minutos": 60,
+          "codigos_tuss": [
+            "20104103"
+          ]
+        }
+      ],
+      "prescricao_padrao": [
+        {
+          "dcb": "Alteplase",
+          "dose": "0,9 mg/kg (máx 90mg)",
+          "via": "EV",
+          "frequencia": "10% em bolus e 90% em bomba de infusão em 60 min"
+        }
+      ]
+    },
+    {
+      "protocolo_id": "PROT-HAS-DESCOMP-2026",
+      "titulo": "Manejo de Crise Hipertensiva na Atenção Primária e UPA",
+      "especialidade": "Clínica Médica / Cardiologia",
+      "versao": "1.8",
+      "cid10_relacionados": [
+        "I10",
+        "I11.9",
+        "I16.0"
+      ],
+      "criterios_inclusao": [
+        "Pressão Arterial Sistólica >= 180 mmHg e/ou Diastólica >= 120 mmHg",
+        "Diferenciar Urgência Hipertensiva de Emergência (lesão aguda de órgão-alvo)"
+      ],
+      "etapas": [
+        {
+          "ordem": 1,
+          "acao": "Repouso em ambiente calmo por 30 minutos e nova aferição em ambos os membros",
+          "prazo_minutos": 30,
+          "codigos_tuss": [
+            "10101012"
+          ]
+        },
+        {
+          "ordem": 2,
+          "acao": "ECG de 12 derivações e fundo de olho se sintomas visuais ou dor torácica",
+          "prazo_minutos": 45,
+          "codigos_tuss": [
+            "40101010"
+          ]
+        }
+      ],
+      "prescricao_padrao": [
+        {
+          "dcb": "Captopril",
+          "dose": "25mg",
+          "via": "VO",
+          "frequencia": "Dose única, reavaliar PA após 60 minutos"
+        }
+      ]
+    },
+    {
+      "protocolo_id": "PROT-DOR-TORACICA-2026",
+      "titulo": "Protocolo de Dor Torácica Aguda e Síndrome Coronariana",
+      "especialidade": "Cardiologia / Emergência",
+      "versao": "2.5",
+      "cid10_relacionados": [
+        "I20.0",
+        "I21.9",
+        "R07.4"
+      ],
+      "criterios_inclusao": [
+        "Dor ou desconforto retroesternal com duração > 10 minutos",
+        "Dor irradiada para membro superior esquerdo, dorso ou mandíbula"
+      ],
+      "etapas": [
+        {
+          "ordem": 1,
+          "acao": "ECG de 12 derivações em até 10 minutos da admissão",
+          "prazo_minutos": 10,
+          "codigos_tuss": [
+            "40101010"
+          ]
+        },
+        {
+          "ordem": 2,
+          "acao": "Dosagem de Troponina Ultrassensível seriada (0h e 3h)",
+          "prazo_minutos": 30,
+          "codigos_tuss": [
+            "40302580"
+          ]
+        },
+        {
+          "ordem": 3,
+          "acao": "Dupla antiagregação plaquetária se SCA confirmada sem contraindicação",
+          "prazo_minutos": 45,
+          "codigos_tuss": [
+            "20104090"
+          ]
+        }
+      ],
+      "prescricao_padrao": [
+        {
+          "dcb": "Ácido acetilsalicílico",
+          "dose": "300mg",
+          "via": "VO (mastigável)",
+          "frequencia": "Dose de ataque única"
+        },
+        {
+          "dcb": "Clopidogrel",
+          "dose": "300mg",
+          "via": "VO",
+          "frequencia": "Dose de ataque única"
+        }
+      ]
+    },
+    {
+      "protocolo_id": "PROT-ASMA-AGUDA-2026",
+      "titulo": "Protocolo de Crise Asmática Moderada a Grave no Adulto",
+      "especialidade": "Pneumologia / Emergência",
+      "versao": "2.0",
+      "cid10_relacionados": [
+        "J45.9",
+        "J46"
+      ],
+      "criterios_inclusao": [
+        "Dispneia progressiva, sibilos difusos e pico de fluxo expiratório (PFE) < 70%",
+        "Uso de musculatura acessória ou SpO2 < 94% em ar ambiente"
+      ],
+      "etapas": [
+        {
+          "ordem": 1,
+          "acao": "Oxigenoterapia suplementar para manter SpO2 entre 93% e 95%",
+          "prazo_minutos": 5,
+          "codigos_tuss": [
+            "20104111"
+          ]
+        },
+        {
+          "ordem": 2,
+          "acao": "Beta-2 agonista de curta duração inalatório repetido a cada 20 min na 1ª hora",
+          "prazo_minutos": 20,
+          "codigos_tuss": [
+            "20104120"
+          ]
+        },
+        {
+          "ordem": 3,
+          "acao": "Corticoide sistêmico precoce (Prednisolona VO ou Hidrocortisona EV)",
+          "prazo_minutos": 30,
+          "codigos_tuss": [
+            "20104138"
+          ]
+        }
+      ],
+      "prescricao_padrao": [
+        {
+          "dcb": "Sulfato de salbutamol",
+          "dose": "400mcg (4 jatos)",
+          "via": "Inalatória com espaçador",
+          "frequencia": "A cada 20 minutos por 1 hora"
+        },
+        {
+          "dcb": "Prednisolona",
+          "dose": "40mg",
+          "via": "VO",
+          "frequencia": "1x ao dia por 5 dias"
+        }
+      ]
+    },
+    {
+      "protocolo_id": "PROT-DENGUE-2026",
+      "titulo": "Manejo Clínico e Estadiamento de Dengue (Grupos A, B, C e D)",
+      "especialidade": "Infectologia / Clínica Médica",
+      "versao": "5.1",
+      "cid10_relacionados": [
+        "A90",
+        "A91"
+      ],
+      "criterios_inclusao": [
+        "Febre aguda (2 a 7 dias) associada a cefaleia, dor retro-orbitária, mialgia ou exantema",
+        "Pesquisa de sinais de alarme (dor abdominal intensa, vômitos persistentes, sangramento de mucosas)"
+      ],
+      "etapas": [
+        {
+          "ordem": 1,
+          "acao": "Prova do laço e aferição de PA em duas posições (sentado e em pé)",
+          "prazo_minutos": 15,
+          "codigos_tuss": [
+            "10101012"
+          ]
+        },
+        {
+          "ordem": 2,
+          "acao": "Coleta de Hemograma completo e Teste Rápido NS1 / Sorologia",
+          "prazo_minutos": 30,
+          "codigos_tuss": [
+            "40304361",
+            "40307891"
+          ]
+        },
+        {
+          "ordem": 3,
+          "acao": "Hidratação oral supervisionada (60-80 mL/kg/dia) ou venosa imediata se Grupo C/D",
+          "prazo_minutos": 30,
+          "codigos_tuss": [
+            "20104081"
+          ]
+        }
+      ],
+      "prescricao_padrao": [
+        {
+          "dcb": "Sais para reidratação oral",
+          "dose": "Conforme peso (60-80 mL/kg/dia)",
+          "via": "VO",
+          "frequencia": "Fracionado ao longo do dia"
+        },
+        {
+          "dcb": "Dipirona monoidratada",
+          "dose": "500mg",
+          "via": "VO",
+          "frequencia": "A cada 6 horas se dor ou febre"
+        }
+      ]
+    }
+  ],
+  "prontuarios": [
+    {
+      "prontuario_id": "PRONT-2026-000001",
+      "paciente": {
+        "id": "PAC-88901",
+        "nome_completo": "Mariana Ferreira Alves",
+        "cpf_mascarado": "***.350.328-**",
+        "cns": "7020932266036",
+        "data_nascimento": "1988-02-01",
+        "idade": 38,
+        "sexo_biologico": "F",
+        "tipo_sanguineo": "AB+",
+        "alergias": [],
+        "comorbidades_previas": [
+          "Hipertensão Arterial (I10)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900401",
+          "data_entrada": "2026-11-16T07:00:00-03:00",
+          "data_alta": null,
+          "status": "Em Internação / UTI",
+          "classificacao_manchester": "Laranja (Muito Urgente)",
+          "protocolo_aplicado_id": "PROT-SEPSE-2026",
+          "profissional_responsavel": {
+            "nome": "Dr. Ricardo Mendes",
+            "conselho": "CRM-SP 145890",
+            "especialidade": "Medicina de Emergência"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "88/54",
+            "fc_bpm": 118,
+            "fr_irpm": 26,
+            "temperatura_c": 38.9,
+            "spo2_pct": 91,
+            "glasgow": 14,
+            "glicemia_mg_dl": 245
+          },
+          "evolucao_soap": {
+            "subjetivo": "Familiar relata febre alta há 24h, disúria há 3 dias e sonolência progressiva iniciada hoje.",
+            "objetivo": "Paciente torporosa, taquipneica, extremidades frias, TEC 4s. Punho-percussão lombar positiva à direita.",
+            "avaliacao": "Choque séptico de provável foco urinário (Pielonefrite aguda).",
+            "plano": "Aberto Protocolo de Sepse. Coletadas hemoculturas, urinocultura e lactato. Iniciado Ceftriaxona 2g EV e expansão volêmica."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40302190",
+              "nome": "Lactato Arterial",
+              "resultado": "4.6 mmol/L",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40304361",
+              "nome": "Hemograma Completo",
+              "resultado": "Leucócitos 21.400/mm³ com 14% de bastões",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40310124",
+              "nome": "Hemocultura (2 amostras)",
+              "resultado": "Aguardando incubação",
+              "status": "Em análise"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Ceftriaxona 2g",
+              "via": "EV",
+              "posologia": "2g de 24/24h",
+              "horario_administracao": "18:45"
+            },
+            {
+              "medicamento": "Soro Fisiológico 0,9%",
+              "via": "EV",
+              "posologia": "1800mL correr em 1 hora",
+              "horario_administracao": "18:30"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000002",
+      "paciente": {
+        "id": "PAC-88902",
+        "nome_completo": "João Pedro da Silva",
+        "cpf_mascarado": "***.127.674-**",
+        "cns": "7068175080694",
+        "data_nascimento": "1953-04-08",
+        "idade": 73,
+        "sexo_biologico": "M",
+        "tipo_sanguineo": "A-",
+        "alergias": [
+          "Penicilina"
+        ],
+        "comorbidades_previas": [
+          "Hipotireoidismo (E03.9)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900402",
+          "data_entrada": "2026-11-17T04:00:00-03:00",
+          "data_alta": "2026-11-17T10:00:00-03:00",
+          "status": "Alta com encaminhamento ambulatorial",
+          "classificacao_manchester": "Amarelo (Urgente)",
+          "protocolo_aplicado_id": "PROT-HAS-DESCOMP-2026",
+          "profissional_responsavel": {
+            "nome": "Dra. Fernanda Lima",
+            "conselho": "CRM-SP 189321",
+            "especialidade": "Clínica Médica"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "190/115",
+            "fc_bpm": 88,
+            "fr_irpm": 16,
+            "temperatura_c": 36.5,
+            "spo2_pct": 97,
+            "glasgow": 15,
+            "glicemia_mg_dl": 104
+          },
+          "evolucao_soap": {
+            "subjetivo": "Paciente refere cefaleia occipital leve após estresse emocional. Relata ter interrompido uso de Losartana há 2 semanas.",
+            "objetivo": "Lúcido, orientado, corado. Ausculta cardíaca rítmica em 2T sem sopros. Exame neurológico sumário normal.",
+            "avaliacao": "Urgência hipertensiva por má adesão medicamentosa, sem sinais de lesão aguda de órgão-alvo.",
+            "plano": "Mantido em repouso, administrado Captopril 25mg VO. Reavaliado após 60 min com PA 148/92 mmHg. Alta orientada."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40101010",
+              "nome": "Eletrocardiograma (ECG) 12 derivações",
+              "resultado": "Ritmo sinusal, sem sinais de isquemia aguda",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Captopril 25mg",
+              "via": "VO",
+              "posologia": "1 comprimido dose única no PS",
+              "horario_administracao": "20:25"
+            },
+            {
+              "medicamento": "Losartana Potássica 50mg",
+              "via": "VO",
+              "posologia": "1 comprimido de 12/12h (uso contínuo)",
+              "horario_administracao": "Receita externa"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000003",
+      "paciente": {
+        "id": "PAC-88903",
+        "nome_completo": "Juliana Souza Lima",
+        "cpf_mascarado": "***.814.532-**",
+        "cns": "7045821103222",
+        "data_nascimento": "1965-01-25",
+        "idade": 61,
+        "sexo_biologico": "F",
+        "tipo_sanguineo": "A+",
+        "alergias": [],
+        "comorbidades_previas": [
+          "Dislipidemia (E78.5)",
+          "Tabagismo ativo (F17.2)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900403",
+          "data_entrada": "2026-11-16T12:00:00-03:00",
+          "data_alta": null,
+          "status": "Em Observação / Sala Vermelha",
+          "classificacao_manchester": "Laranja (Muito Urgente)",
+          "protocolo_aplicado_id": "PROT-DOR-TORACICA-2026",
+          "profissional_responsavel": {
+            "nome": "Dr. Alexandre Nogueira",
+            "conselho": "CRM-SP 112450",
+            "especialidade": "Cardiologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "154/96",
+            "fc_bpm": 102,
+            "fr_irpm": 20,
+            "temperatura_c": 36.4,
+            "spo2_pct": 95,
+            "glasgow": 15,
+            "glicemia_mg_dl": 138
+          },
+          "evolucao_soap": {
+            "subjetivo": "Dor retroesternal em aperto iniciada há 40 minutos em repouso, irradiada para ombro esquerdo, associada a sudorese fria.",
+            "objetivo": "Ansioso, sudoreico, ritmo cardíaco regular sem sopros, pulmões limpos.",
+            "avaliacao": "Síndrome Coronariana Aguda sem supra de ST a esclarecer.",
+            "plano": "Realizado ECG em 6 min (infradesnivelamento de ST em V4-V6). Administrado AAS 300mg + Clopidogrel 300mg. Solicitada Troponina seriada."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40101010",
+              "nome": "Eletrocardiograma (ECG) 12 derivações",
+              "resultado": "Infradesnivelamento de ST de 1,5mm em parede anterior",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40302580",
+              "nome": "Troponina Ultrassensível (0h)",
+              "resultado": "68 ng/L (Elevada)",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Ácido Acetilsalicílico 100mg",
+              "via": "VO",
+              "posologia": "3 comprimidos mastigáveis agora",
+              "horario_administracao": "14:12"
+            },
+            {
+              "medicamento": "Clopidogrel 75mg",
+              "via": "VO",
+              "posologia": "4 comprimidos agora",
+              "horario_administracao": "14:15"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000004",
+      "paciente": {
+        "id": "PAC-88904",
+        "nome_completo": "Rafael Henrique Oliveira",
+        "cpf_mascarado": "***.467.967-**",
+        "cns": "7093081657201",
+        "data_nascimento": "1954-02-13",
+        "idade": 72,
+        "sexo_biologico": "M",
+        "tipo_sanguineo": "B+",
+        "alergias": [
+          "Iodo / Contraste"
+        ],
+        "comorbidades_previas": [
+          "Hipertensão Arterial (I10)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900404",
+          "data_entrada": "2026-11-16T14:00:00-03:00",
+          "data_alta": null,
+          "status": "Transferido para Unidade de AVC",
+          "classificacao_manchester": "Vermelho (Emergência)",
+          "protocolo_aplicado_id": "PROT-AVC-ISQ-2026",
+          "profissional_responsavel": {
+            "nome": "Dra. Camila Vasconcelos",
+            "conselho": "CRM-SP 167892",
+            "especialidade": "Neurologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "176/98",
+            "fc_bpm": 84,
+            "fr_irpm": 18,
+            "temperatura_c": 36.6,
+            "spo2_pct": 96,
+            "glasgow": 13,
+            "glicemia_mg_dl": 118
+          },
+          "evolucao_soap": {
+            "subjetivo": "Início súbito de hemiparesia direita e disartria há 1 hora e 15 minutos, presenciado pelo cônjuge.",
+            "objetivo": "NIHSS = 9 (desvio de rima labial, hemiparesia braquiocrural direita grau 2, disartria moderada).",
+            "avaliacao": "Acidente Vascular Cerebral Isquêmico Agudo em janela terapêutica.",
+            "plano": "TC de crânio sem sangramento (ASPECTS 10). Iniciada trombólise venosa com Alteplase dentro de 42 minutos da porta."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "41001010",
+              "nome": "TC de Crânio sem Contraste",
+              "resultado": "Ausência de hemorragia intracraniana",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40304361",
+              "nome": "Coagulograma e Plaquetas",
+              "resultado": "INR 1.05, Plaquetas 230.000/mm³",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Alteplase 50mg",
+              "via": "EV",
+              "posologia": "0,9 mg/kg (10% bolus, restante em 60 min)",
+              "horario_administracao": "10:42"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000005",
+      "paciente": {
+        "id": "PAC-88905",
+        "nome_completo": "Beatriz Santos Rocha",
+        "cpf_mascarado": "***.180.665-**",
+        "cns": "7094304365998",
+        "data_nascimento": "1994-08-18",
+        "idade": 32,
+        "sexo_biologico": "F",
+        "tipo_sanguineo": "B-",
+        "alergias": [
+          "Sulfametoxazol + Trimetoprima"
+        ],
+        "comorbidades_previas": [
+          "Diabetes Mellitus Tipo 2 (E11)",
+          "Hipertensão Arterial (I10)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900405",
+          "data_entrada": "2026-11-16T21:00:00-03:00",
+          "data_alta": "2026-11-17T02:00:00-03:00",
+          "status": "Alta hospitalar após estabilização",
+          "classificacao_manchester": "Amarelo (Urgente)",
+          "protocolo_aplicado_id": "PROT-ASMA-AGUDA-2026",
+          "profissional_responsavel": {
+            "nome": "Dr. Paulo Roberto Farias",
+            "conselho": "CRM-SP 134901",
+            "especialidade": "Pneumologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "128/82",
+            "fc_bpm": 110,
+            "fr_irpm": 24,
+            "temperatura_c": 36.8,
+            "spo2_pct": 92,
+            "glasgow": 15,
+            "glicemia_mg_dl": 96
+          },
+          "evolucao_soap": {
+            "subjetivo": "Paciente asmático relata chiado no peito e falta de ar após exposição a poeira domiciliar há 4 horas.",
+            "objetivo": "Taquipneico, sibilos expiratórios difusos bilateralmente, sem tiragem intercostal grave.",
+            "avaliacao": "Exacerbação aguda de asma de intensidade moderada.",
+            "plano": "Realizados 3 ciclos de Salbutamol + Brometo de Ipratrópio e Prednisolona 40mg VO. Melhora importante da ausculta e SpO2 97% em ar ambiente."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40105075",
+              "nome": "Oximetria de Pulso Contínua",
+              "resultado": "SpO2 inicial 92%, pós-broncodilatador 97%",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Sulfato de Salbutamol 100mcg/dose",
+              "via": "Inalatória",
+              "posologia": "4 jatos a cada 20 min (3 ciclos)",
+              "horario_administracao": "16:10"
+            },
+            {
+              "medicamento": "Prednisolona 20mg",
+              "via": "VO",
+              "posologia": "2 comprimidos agora + 2 comp/dia por 5 dias",
+              "horario_administracao": "16:15"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000006",
+      "paciente": {
+        "id": "PAC-88906",
+        "nome_completo": "Lucas Gabriel Santos",
+        "cpf_mascarado": "***.891.396-**",
+        "cns": "7022821428812",
+        "data_nascimento": "1993-02-02",
+        "idade": 33,
+        "sexo_biologico": "M",
+        "tipo_sanguineo": "A-",
+        "alergias": [
+          "Iodo / Contraste"
+        ],
+        "comorbidades_previas": [
+          "Hipertensão Arterial (I10)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900406",
+          "data_entrada": "2026-11-18T14:00:00-03:00",
+          "data_alta": "2026-11-18T17:00:00-03:00",
+          "status": "Alta com retorno agendado em 48h",
+          "classificacao_manchester": "Verde (Pouco Urgente)",
+          "protocolo_aplicado_id": "PROT-DENGUE-2026",
+          "profissional_responsavel": {
+            "nome": "Dra. Beatriz Guimarães",
+            "conselho": "CRM-SP 198443",
+            "especialidade": "Infectologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "116/74",
+            "fc_bpm": 92,
+            "fr_irpm": 18,
+            "temperatura_c": 38.2,
+            "spo2_pct": 98,
+            "glasgow": 15,
+            "glicemia_mg_dl": 91
+          },
+          "evolucao_soap": {
+            "subjetivo": "Febre de 38,5°C há 3 dias, mialgia intensa, cefaleia retro-orbitária. Nega dor abdominal, vômitos ou sangramentos.",
+            "objetivo": "Hidratado, mucosas coradas, prova do laço negativa, abdome flácido e indolor à palpação.",
+            "avaliacao": "Dengue provável sem sinais de alarme (Estadiamento Grupo A).",
+            "plano": "Hidratação oral vigorosa, sintomáticos (evitar AINEs/AAS), entrega de cartão de acompanhamento da dengue e retorno imediato se sinais de alarme."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40307891",
+              "nome": "Pesquisa de Antígeno NS1 Dengue",
+              "resultado": "Reagente",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40304361",
+              "nome": "Hemograma Completo",
+              "resultado": "Hematócrito 41%, Plaquetas 165.000/mm³",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Dipirona 500mg",
+              "via": "VO",
+              "posologia": "1 comprimido de 6/6h se dor ou febre",
+              "horario_administracao": "Uso domiciliar"
+            },
+            {
+              "medicamento": "Sais para Reidratação Oral",
+              "via": "VO",
+              "posologia": "Ingerir 4,5 litros de líquidos/dia",
+              "horario_administracao": "Uso domiciliar"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000007",
+      "paciente": {
+        "id": "PAC-88907",
+        "nome_completo": "Camila Oliveira Costa",
+        "cpf_mascarado": "***.954.473-**",
+        "cns": "7057943234281",
+        "data_nascimento": "1972-05-15",
+        "idade": 54,
+        "sexo_biologico": "F",
+        "tipo_sanguineo": "B-",
+        "alergias": [],
+        "comorbidades_previas": [
+          "Nega comorbidades prévias"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900407",
+          "data_entrada": "2026-11-18T18:00:00-03:00",
+          "data_alta": null,
+          "status": "Em Internação / UTI",
+          "classificacao_manchester": "Laranja (Muito Urgente)",
+          "protocolo_aplicado_id": "PROT-SEPSE-2026",
+          "profissional_responsavel": {
+            "nome": "Dr. Ricardo Mendes",
+            "conselho": "CRM-SP 145890",
+            "especialidade": "Medicina de Emergência"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "88/54",
+            "fc_bpm": 118,
+            "fr_irpm": 26,
+            "temperatura_c": 38.9,
+            "spo2_pct": 91,
+            "glasgow": 14,
+            "glicemia_mg_dl": 245
+          },
+          "evolucao_soap": {
+            "subjetivo": "Familiar relata febre alta há 24h, disúria há 3 dias e sonolência progressiva iniciada hoje.",
+            "objetivo": "Paciente torporosa, taquipneica, extremidades frias, TEC 4s. Punho-percussão lombar positiva à direita.",
+            "avaliacao": "Choque séptico de provável foco urinário (Pielonefrite aguda).",
+            "plano": "Aberto Protocolo de Sepse. Coletadas hemoculturas, urinocultura e lactato. Iniciado Ceftriaxona 2g EV e expansão volêmica."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40302190",
+              "nome": "Lactato Arterial",
+              "resultado": "4.6 mmol/L",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40304361",
+              "nome": "Hemograma Completo",
+              "resultado": "Leucócitos 21.400/mm³ com 14% de bastões",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40310124",
+              "nome": "Hemocultura (2 amostras)",
+              "resultado": "Aguardando incubação",
+              "status": "Em análise"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Ceftriaxona 2g",
+              "via": "EV",
+              "posologia": "2g de 24/24h",
+              "horario_administracao": "18:45"
+            },
+            {
+              "medicamento": "Soro Fisiológico 0,9%",
+              "via": "EV",
+              "posologia": "1800mL correr em 1 hora",
+              "horario_administracao": "18:30"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000008",
+      "paciente": {
+        "id": "PAC-88908",
+        "nome_completo": "Marcos Vinicius Souza",
+        "cpf_mascarado": "***.723.750-**",
+        "cns": "7083749478913",
+        "data_nascimento": "1965-12-22",
+        "idade": 61,
+        "sexo_biologico": "M",
+        "tipo_sanguineo": "A-",
+        "alergias": [],
+        "comorbidades_previas": [
+          "Asma brônquica na infância (J45.9)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900408",
+          "data_entrada": "2026-11-19T01:00:00-03:00",
+          "data_alta": "2026-11-19T03:00:00-03:00",
+          "status": "Alta com encaminhamento ambulatorial",
+          "classificacao_manchester": "Amarelo (Urgente)",
+          "protocolo_aplicado_id": "PROT-HAS-DESCOMP-2026",
+          "profissional_responsavel": {
+            "nome": "Dra. Fernanda Lima",
+            "conselho": "CRM-SP 189321",
+            "especialidade": "Clínica Médica"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "190/115",
+            "fc_bpm": 88,
+            "fr_irpm": 16,
+            "temperatura_c": 36.5,
+            "spo2_pct": 97,
+            "glasgow": 15,
+            "glicemia_mg_dl": 104
+          },
+          "evolucao_soap": {
+            "subjetivo": "Paciente refere cefaleia occipital leve após estresse emocional. Relata ter interrompido uso de Losartana há 2 semanas.",
+            "objetivo": "Lúcido, orientado, corado. Ausculta cardíaca rítmica em 2T sem sopros. Exame neurológico sumário normal.",
+            "avaliacao": "Urgência hipertensiva por má adesão medicamentosa, sem sinais de lesão aguda de órgão-alvo.",
+            "plano": "Mantido em repouso, administrado Captopril 25mg VO. Reavaliado após 60 min com PA 148/92 mmHg. Alta orientada."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40101010",
+              "nome": "Eletrocardiograma (ECG) 12 derivações",
+              "resultado": "Ritmo sinusal, sem sinais de isquemia aguda",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Captopril 25mg",
+              "via": "VO",
+              "posologia": "1 comprimido dose única no PS",
+              "horario_administracao": "20:25"
+            },
+            {
+              "medicamento": "Losartana Potássica 50mg",
+              "via": "VO",
+              "posologia": "1 comprimido de 12/12h (uso contínuo)",
+              "horario_administracao": "Receita externa"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000009",
+      "paciente": {
+        "id": "PAC-88909",
+        "nome_completo": "Patrícia Mendes Silva",
+        "cpf_mascarado": "***.670.324-**",
+        "cns": "7055890068783",
+        "data_nascimento": "1972-05-21",
+        "idade": 54,
+        "sexo_biologico": "F",
+        "tipo_sanguineo": "O+",
+        "alergias": [],
+        "comorbidades_previas": [
+          "Hipertensão Arterial (I10)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900409",
+          "data_entrada": "2026-11-19T10:00:00-03:00",
+          "data_alta": null,
+          "status": "Em Observação / Sala Vermelha",
+          "classificacao_manchester": "Laranja (Muito Urgente)",
+          "protocolo_aplicado_id": "PROT-DOR-TORACICA-2026",
+          "profissional_responsavel": {
+            "nome": "Dr. Alexandre Nogueira",
+            "conselho": "CRM-SP 112450",
+            "especialidade": "Cardiologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "154/96",
+            "fc_bpm": 102,
+            "fr_irpm": 20,
+            "temperatura_c": 36.4,
+            "spo2_pct": 95,
+            "glasgow": 15,
+            "glicemia_mg_dl": 138
+          },
+          "evolucao_soap": {
+            "subjetivo": "Dor retroesternal em aperto iniciada há 40 minutos em repouso, irradiada para ombro esquerdo, associada a sudorese fria.",
+            "objetivo": "Ansioso, sudoreico, ritmo cardíaco regular sem sopros, pulmões limpos.",
+            "avaliacao": "Síndrome Coronariana Aguda sem supra de ST a esclarecer.",
+            "plano": "Realizado ECG em 6 min (infradesnivelamento de ST em V4-V6). Administrado AAS 300mg + Clopidogrel 300mg. Solicitada Troponina seriada."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40101010",
+              "nome": "Eletrocardiograma (ECG) 12 derivações",
+              "resultado": "Infradesnivelamento de ST de 1,5mm em parede anterior",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40302580",
+              "nome": "Troponina Ultrassensível (0h)",
+              "resultado": "68 ng/L (Elevada)",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Ácido Acetilsalicílico 100mg",
+              "via": "VO",
+              "posologia": "3 comprimidos mastigáveis agora",
+              "horario_administracao": "14:12"
+            },
+            {
+              "medicamento": "Clopidogrel 75mg",
+              "via": "VO",
+              "posologia": "4 comprimidos agora",
+              "horario_administracao": "14:15"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000010",
+      "paciente": {
+        "id": "PAC-88910",
+        "nome_completo": "Bruno César Almeida",
+        "cpf_mascarado": "***.167.316-**",
+        "cns": "7056033091279",
+        "data_nascimento": "1999-06-13",
+        "idade": 27,
+        "sexo_biologico": "M",
+        "tipo_sanguineo": "A-",
+        "alergias": [
+          "AINEs (Ibuprofeno)"
+        ],
+        "comorbidades_previas": [
+          "Asma brônquica na infância (J45.9)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900410",
+          "data_entrada": "2026-11-18T13:00:00-03:00",
+          "data_alta": null,
+          "status": "Transferido para Unidade de AVC",
+          "classificacao_manchester": "Vermelho (Emergência)",
+          "protocolo_aplicado_id": "PROT-AVC-ISQ-2026",
+          "profissional_responsavel": {
+            "nome": "Dra. Camila Vasconcelos",
+            "conselho": "CRM-SP 167892",
+            "especialidade": "Neurologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "176/98",
+            "fc_bpm": 84,
+            "fr_irpm": 18,
+            "temperatura_c": 36.6,
+            "spo2_pct": 96,
+            "glasgow": 13,
+            "glicemia_mg_dl": 118
+          },
+          "evolucao_soap": {
+            "subjetivo": "Início súbito de hemiparesia direita e disartria há 1 hora e 15 minutos, presenciado pelo cônjuge.",
+            "objetivo": "NIHSS = 9 (desvio de rima labial, hemiparesia braquiocrural direita grau 2, disartria moderada).",
+            "avaliacao": "Acidente Vascular Cerebral Isquêmico Agudo em janela terapêutica.",
+            "plano": "TC de crânio sem sangramento (ASPECTS 10). Iniciada trombólise venosa com Alteplase dentro de 42 minutos da porta."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "41001010",
+              "nome": "TC de Crânio sem Contraste",
+              "resultado": "Ausência de hemorragia intracraniana",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40304361",
+              "nome": "Coagulograma e Plaquetas",
+              "resultado": "INR 1.05, Plaquetas 230.000/mm³",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Alteplase 50mg",
+              "via": "EV",
+              "posologia": "0,9 mg/kg (10% bolus, restante em 60 min)",
+              "horario_administracao": "10:42"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000011",
+      "paciente": {
+        "id": "PAC-88911",
+        "nome_completo": "Luciana Pereira Gomes",
+        "cpf_mascarado": "***.242.352-**",
+        "cns": "7086214147353",
+        "data_nascimento": "1973-11-15",
+        "idade": 53,
+        "sexo_biologico": "F",
+        "tipo_sanguineo": "B+",
+        "alergias": [
+          "AINEs (Ibuprofeno)"
+        ],
+        "comorbidades_previas": [
+          "Hipotireoidismo (E03.9)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900411",
+          "data_entrada": "2026-11-18T11:00:00-03:00",
+          "data_alta": "2026-11-18T15:00:00-03:00",
+          "status": "Alta hospitalar após estabilização",
+          "classificacao_manchester": "Amarelo (Urgente)",
+          "protocolo_aplicado_id": "PROT-ASMA-AGUDA-2026",
+          "profissional_responsavel": {
+            "nome": "Dr. Paulo Roberto Farias",
+            "conselho": "CRM-SP 134901",
+            "especialidade": "Pneumologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "128/82",
+            "fc_bpm": 110,
+            "fr_irpm": 24,
+            "temperatura_c": 36.8,
+            "spo2_pct": 92,
+            "glasgow": 15,
+            "glicemia_mg_dl": 96
+          },
+          "evolucao_soap": {
+            "subjetivo": "Paciente asmático relata chiado no peito e falta de ar após exposição a poeira domiciliar há 4 horas.",
+            "objetivo": "Taquipneico, sibilos expiratórios difusos bilateralmente, sem tiragem intercostal grave.",
+            "avaliacao": "Exacerbação aguda de asma de intensidade moderada.",
+            "plano": "Realizados 3 ciclos de Salbutamol + Brometo de Ipratrópio e Prednisolona 40mg VO. Melhora importante da ausculta e SpO2 97% em ar ambiente."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40105075",
+              "nome": "Oximetria de Pulso Contínua",
+              "resultado": "SpO2 inicial 92%, pós-broncodilatador 97%",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Sulfato de Salbutamol 100mcg/dose",
+              "via": "Inalatória",
+              "posologia": "4 jatos a cada 20 min (3 ciclos)",
+              "horario_administracao": "16:10"
+            },
+            {
+              "medicamento": "Prednisolona 20mg",
+              "via": "VO",
+              "posologia": "2 comprimidos agora + 2 comp/dia por 5 dias",
+              "horario_administracao": "16:15"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000012",
+      "paciente": {
+        "id": "PAC-88912",
+        "nome_completo": "Felipe Augusto Pereira",
+        "cpf_mascarado": "***.241.621-**",
+        "cns": "7020709568991",
+        "data_nascimento": "1975-10-13",
+        "idade": 51,
+        "sexo_biologico": "M",
+        "tipo_sanguineo": "O+",
+        "alergias": [
+          "Iodo / Contraste"
+        ],
+        "comorbidades_previas": [
+          "Hipertensão Arterial (I10)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900412",
+          "data_entrada": "2026-11-19T07:00:00-03:00",
+          "data_alta": "2026-11-19T10:00:00-03:00",
+          "status": "Alta com retorno agendado em 48h",
+          "classificacao_manchester": "Verde (Pouco Urgente)",
+          "protocolo_aplicado_id": "PROT-DENGUE-2026",
+          "profissional_responsavel": {
+            "nome": "Dra. Beatriz Guimarães",
+            "conselho": "CRM-SP 198443",
+            "especialidade": "Infectologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "116/74",
+            "fc_bpm": 92,
+            "fr_irpm": 18,
+            "temperatura_c": 38.2,
+            "spo2_pct": 98,
+            "glasgow": 15,
+            "glicemia_mg_dl": 91
+          },
+          "evolucao_soap": {
+            "subjetivo": "Febre de 38,5°C há 3 dias, mialgia intensa, cefaleia retro-orbitária. Nega dor abdominal, vômitos ou sangramentos.",
+            "objetivo": "Hidratado, mucosas coradas, prova do laço negativa, abdome flácido e indolor à palpação.",
+            "avaliacao": "Dengue provável sem sinais de alarme (Estadiamento Grupo A).",
+            "plano": "Hidratação oral vigorosa, sintomáticos (evitar AINEs/AAS), entrega de cartão de acompanhamento da dengue e retorno imediato se sinais de alarme."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40307891",
+              "nome": "Pesquisa de Antígeno NS1 Dengue",
+              "resultado": "Reagente",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40304361",
+              "nome": "Hemograma Completo",
+              "resultado": "Hematócrito 41%, Plaquetas 165.000/mm³",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Dipirona 500mg",
+              "via": "VO",
+              "posologia": "1 comprimido de 6/6h se dor ou febre",
+              "horario_administracao": "Uso domiciliar"
+            },
+            {
+              "medicamento": "Sais para Reidratação Oral",
+              "via": "VO",
+              "posologia": "Ingerir 4,5 litros de líquidos/dia",
+              "horario_administracao": "Uso domiciliar"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000013",
+      "paciente": {
+        "id": "PAC-88913",
+        "nome_completo": "Fernanda Ribeiro Martins",
+        "cpf_mascarado": "***.532.710-**",
+        "cns": "7061812456976",
+        "data_nascimento": "1957-11-06",
+        "idade": 69,
+        "sexo_biologico": "F",
+        "tipo_sanguineo": "AB+",
+        "alergias": [
+          "Sulfametoxazol + Trimetoprima"
+        ],
+        "comorbidades_previas": [
+          "Asma brônquica na infância (J45.9)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900413",
+          "data_entrada": "2026-11-20T09:00:00-03:00",
+          "data_alta": null,
+          "status": "Em Internação / UTI",
+          "classificacao_manchester": "Laranja (Muito Urgente)",
+          "protocolo_aplicado_id": "PROT-SEPSE-2026",
+          "profissional_responsavel": {
+            "nome": "Dr. Ricardo Mendes",
+            "conselho": "CRM-SP 145890",
+            "especialidade": "Medicina de Emergência"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "88/54",
+            "fc_bpm": 118,
+            "fr_irpm": 26,
+            "temperatura_c": 38.9,
+            "spo2_pct": 91,
+            "glasgow": 14,
+            "glicemia_mg_dl": 245
+          },
+          "evolucao_soap": {
+            "subjetivo": "Familiar relata febre alta há 24h, disúria há 3 dias e sonolência progressiva iniciada hoje.",
+            "objetivo": "Paciente torporosa, taquipneica, extremidades frias, TEC 4s. Punho-percussão lombar positiva à direita.",
+            "avaliacao": "Choque séptico de provável foco urinário (Pielonefrite aguda).",
+            "plano": "Aberto Protocolo de Sepse. Coletadas hemoculturas, urinocultura e lactato. Iniciado Ceftriaxona 2g EV e expansão volêmica."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40302190",
+              "nome": "Lactato Arterial",
+              "resultado": "4.6 mmol/L",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40304361",
+              "nome": "Hemograma Completo",
+              "resultado": "Leucócitos 21.400/mm³ com 14% de bastões",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40310124",
+              "nome": "Hemocultura (2 amostras)",
+              "resultado": "Aguardando incubação",
+              "status": "Em análise"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Ceftriaxona 2g",
+              "via": "EV",
+              "posologia": "2g de 24/24h",
+              "horario_administracao": "18:45"
+            },
+            {
+              "medicamento": "Soro Fisiológico 0,9%",
+              "via": "EV",
+              "posologia": "1800mL correr em 1 hora",
+              "horario_administracao": "18:30"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000014",
+      "paciente": {
+        "id": "PAC-88914",
+        "nome_completo": "André Luiz Costa",
+        "cpf_mascarado": "***.798.649-**",
+        "cns": "7047584733968",
+        "data_nascimento": "1981-05-18",
+        "idade": 45,
+        "sexo_biologico": "M",
+        "tipo_sanguineo": "B-",
+        "alergias": [],
+        "comorbidades_previas": [
+          "Dislipidemia (E78.5)",
+          "Tabagismo ativo (F17.2)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900414",
+          "data_entrada": "2026-11-18T20:00:00-03:00",
+          "data_alta": "2026-11-18T22:00:00-03:00",
+          "status": "Alta com encaminhamento ambulatorial",
+          "classificacao_manchester": "Amarelo (Urgente)",
+          "protocolo_aplicado_id": "PROT-HAS-DESCOMP-2026",
+          "profissional_responsavel": {
+            "nome": "Dra. Fernanda Lima",
+            "conselho": "CRM-SP 189321",
+            "especialidade": "Clínica Médica"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "190/115",
+            "fc_bpm": 88,
+            "fr_irpm": 16,
+            "temperatura_c": 36.5,
+            "spo2_pct": 97,
+            "glasgow": 15,
+            "glicemia_mg_dl": 104
+          },
+          "evolucao_soap": {
+            "subjetivo": "Paciente refere cefaleia occipital leve após estresse emocional. Relata ter interrompido uso de Losartana há 2 semanas.",
+            "objetivo": "Lúcido, orientado, corado. Ausculta cardíaca rítmica em 2T sem sopros. Exame neurológico sumário normal.",
+            "avaliacao": "Urgência hipertensiva por má adesão medicamentosa, sem sinais de lesão aguda de órgão-alvo.",
+            "plano": "Mantido em repouso, administrado Captopril 25mg VO. Reavaliado após 60 min com PA 148/92 mmHg. Alta orientada."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40101010",
+              "nome": "Eletrocardiograma (ECG) 12 derivações",
+              "resultado": "Ritmo sinusal, sem sinais de isquemia aguda",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Captopril 25mg",
+              "via": "VO",
+              "posologia": "1 comprimido dose única no PS",
+              "horario_administracao": "20:25"
+            },
+            {
+              "medicamento": "Losartana Potássica 50mg",
+              "via": "VO",
+              "posologia": "1 comprimido de 12/12h (uso contínuo)",
+              "horario_administracao": "Receita externa"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000015",
+      "paciente": {
+        "id": "PAC-88915",
+        "nome_completo": "Renata Almeida Carvalho",
+        "cpf_mascarado": "***.839.996-**",
+        "cns": "7047450743307",
+        "data_nascimento": "1975-03-15",
+        "idade": 51,
+        "sexo_biologico": "F",
+        "tipo_sanguineo": "A+",
+        "alergias": [
+          "Sulfametoxazol + Trimetoprima"
+        ],
+        "comorbidades_previas": [
+          "Hipertensão Arterial (I10)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900415",
+          "data_entrada": "2026-11-19T02:00:00-03:00",
+          "data_alta": null,
+          "status": "Em Observação / Sala Vermelha",
+          "classificacao_manchester": "Laranja (Muito Urgente)",
+          "protocolo_aplicado_id": "PROT-DOR-TORACICA-2026",
+          "profissional_responsavel": {
+            "nome": "Dr. Alexandre Nogueira",
+            "conselho": "CRM-SP 112450",
+            "especialidade": "Cardiologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "154/96",
+            "fc_bpm": 102,
+            "fr_irpm": 20,
+            "temperatura_c": 36.4,
+            "spo2_pct": 95,
+            "glasgow": 15,
+            "glicemia_mg_dl": 138
+          },
+          "evolucao_soap": {
+            "subjetivo": "Dor retroesternal em aperto iniciada há 40 minutos em repouso, irradiada para ombro esquerdo, associada a sudorese fria.",
+            "objetivo": "Ansioso, sudoreico, ritmo cardíaco regular sem sopros, pulmões limpos.",
+            "avaliacao": "Síndrome Coronariana Aguda sem supra de ST a esclarecer.",
+            "plano": "Realizado ECG em 6 min (infradesnivelamento de ST em V4-V6). Administrado AAS 300mg + Clopidogrel 300mg. Solicitada Troponina seriada."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40101010",
+              "nome": "Eletrocardiograma (ECG) 12 derivações",
+              "resultado": "Infradesnivelamento de ST de 1,5mm em parede anterior",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40302580",
+              "nome": "Troponina Ultrassensível (0h)",
+              "resultado": "68 ng/L (Elevada)",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Ácido Acetilsalicílico 100mg",
+              "via": "VO",
+              "posologia": "3 comprimidos mastigáveis agora",
+              "horario_administracao": "14:12"
+            },
+            {
+              "medicamento": "Clopidogrel 75mg",
+              "via": "VO",
+              "posologia": "4 comprimidos agora",
+              "horario_administracao": "14:15"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000016",
+      "paciente": {
+        "id": "PAC-88916",
+        "nome_completo": "Rodrigo Martins Ferreira",
+        "cpf_mascarado": "***.619.723-**",
+        "cns": "7028034185865",
+        "data_nascimento": "2003-11-10",
+        "idade": 23,
+        "sexo_biologico": "M",
+        "tipo_sanguineo": "B-",
+        "alergias": [
+          "Iodo / Contraste"
+        ],
+        "comorbidades_previas": [
+          "Diabetes Mellitus Tipo 2 (E11)",
+          "Hipertensão Arterial (I10)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900416",
+          "data_entrada": "2026-11-21T00:00:00-03:00",
+          "data_alta": null,
+          "status": "Transferido para Unidade de AVC",
+          "classificacao_manchester": "Vermelho (Emergência)",
+          "protocolo_aplicado_id": "PROT-AVC-ISQ-2026",
+          "profissional_responsavel": {
+            "nome": "Dra. Camila Vasconcelos",
+            "conselho": "CRM-SP 167892",
+            "especialidade": "Neurologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "176/98",
+            "fc_bpm": 84,
+            "fr_irpm": 18,
+            "temperatura_c": 36.6,
+            "spo2_pct": 96,
+            "glasgow": 13,
+            "glicemia_mg_dl": 118
+          },
+          "evolucao_soap": {
+            "subjetivo": "Início súbito de hemiparesia direita e disartria há 1 hora e 15 minutos, presenciado pelo cônjuge.",
+            "objetivo": "NIHSS = 9 (desvio de rima labial, hemiparesia braquiocrural direita grau 2, disartria moderada).",
+            "avaliacao": "Acidente Vascular Cerebral Isquêmico Agudo em janela terapêutica.",
+            "plano": "TC de crânio sem sangramento (ASPECTS 10). Iniciada trombólise venosa com Alteplase dentro de 42 minutos da porta."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "41001010",
+              "nome": "TC de Crânio sem Contraste",
+              "resultado": "Ausência de hemorragia intracraniana",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40304361",
+              "nome": "Coagulograma e Plaquetas",
+              "resultado": "INR 1.05, Plaquetas 230.000/mm³",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Alteplase 50mg",
+              "via": "EV",
+              "posologia": "0,9 mg/kg (10% bolus, restante em 60 min)",
+              "horario_administracao": "10:42"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000017",
+      "paciente": {
+        "id": "PAC-88917",
+        "nome_completo": "Aline Barbosa Dias",
+        "cpf_mascarado": "***.600.119-**",
+        "cns": "7052119777069",
+        "data_nascimento": "1982-09-01",
+        "idade": 44,
+        "sexo_biologico": "F",
+        "tipo_sanguineo": "A-",
+        "alergias": [],
+        "comorbidades_previas": [
+          "Diabetes Mellitus Tipo 2 (E11)",
+          "Hipertensão Arterial (I10)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900417",
+          "data_entrada": "2026-11-21T04:00:00-03:00",
+          "data_alta": "2026-11-21T08:00:00-03:00",
+          "status": "Alta hospitalar após estabilização",
+          "classificacao_manchester": "Amarelo (Urgente)",
+          "protocolo_aplicado_id": "PROT-ASMA-AGUDA-2026",
+          "profissional_responsavel": {
+            "nome": "Dr. Paulo Roberto Farias",
+            "conselho": "CRM-SP 134901",
+            "especialidade": "Pneumologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "128/82",
+            "fc_bpm": 110,
+            "fr_irpm": 24,
+            "temperatura_c": 36.8,
+            "spo2_pct": 92,
+            "glasgow": 15,
+            "glicemia_mg_dl": 96
+          },
+          "evolucao_soap": {
+            "subjetivo": "Paciente asmático relata chiado no peito e falta de ar após exposição a poeira domiciliar há 4 horas.",
+            "objetivo": "Taquipneico, sibilos expiratórios difusos bilateralmente, sem tiragem intercostal grave.",
+            "avaliacao": "Exacerbação aguda de asma de intensidade moderada.",
+            "plano": "Realizados 3 ciclos de Salbutamol + Brometo de Ipratrópio e Prednisolona 40mg VO. Melhora importante da ausculta e SpO2 97% em ar ambiente."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40105075",
+              "nome": "Oximetria de Pulso Contínua",
+              "resultado": "SpO2 inicial 92%, pós-broncodilatador 97%",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Sulfato de Salbutamol 100mcg/dose",
+              "via": "Inalatória",
+              "posologia": "4 jatos a cada 20 min (3 ciclos)",
+              "horario_administracao": "16:10"
+            },
+            {
+              "medicamento": "Prednisolona 20mg",
+              "via": "VO",
+              "posologia": "2 comprimidos agora + 2 comp/dia por 5 dias",
+              "horario_administracao": "16:15"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000018",
+      "paciente": {
+        "id": "PAC-88918",
+        "nome_completo": "Gustavo Henrique Rodrigues",
+        "cpf_mascarado": "***.935.170-**",
+        "cns": "7027720006480",
+        "data_nascimento": "2004-10-03",
+        "idade": 22,
+        "sexo_biologico": "M",
+        "tipo_sanguineo": "AB-",
+        "alergias": [
+          "Sulfametoxazol + Trimetoprima"
+        ],
+        "comorbidades_previas": [
+          "Diabetes Mellitus Tipo 2 (E11)",
+          "Hipertensão Arterial (I10)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900418",
+          "data_entrada": "2026-11-20T01:00:00-03:00",
+          "data_alta": "2026-11-20T06:00:00-03:00",
+          "status": "Alta com retorno agendado em 48h",
+          "classificacao_manchester": "Verde (Pouco Urgente)",
+          "protocolo_aplicado_id": "PROT-DENGUE-2026",
+          "profissional_responsavel": {
+            "nome": "Dra. Beatriz Guimarães",
+            "conselho": "CRM-SP 198443",
+            "especialidade": "Infectologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "116/74",
+            "fc_bpm": 92,
+            "fr_irpm": 18,
+            "temperatura_c": 38.2,
+            "spo2_pct": 98,
+            "glasgow": 15,
+            "glicemia_mg_dl": 91
+          },
+          "evolucao_soap": {
+            "subjetivo": "Febre de 38,5°C há 3 dias, mialgia intensa, cefaleia retro-orbitária. Nega dor abdominal, vômitos ou sangramentos.",
+            "objetivo": "Hidratado, mucosas coradas, prova do laço negativa, abdome flácido e indolor à palpação.",
+            "avaliacao": "Dengue provável sem sinais de alarme (Estadiamento Grupo A).",
+            "plano": "Hidratação oral vigorosa, sintomáticos (evitar AINEs/AAS), entrega de cartão de acompanhamento da dengue e retorno imediato se sinais de alarme."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40307891",
+              "nome": "Pesquisa de Antígeno NS1 Dengue",
+              "resultado": "Reagente",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40304361",
+              "nome": "Hemograma Completo",
+              "resultado": "Hematócrito 41%, Plaquetas 165.000/mm³",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Dipirona 500mg",
+              "via": "VO",
+              "posologia": "1 comprimido de 6/6h se dor ou febre",
+              "horario_administracao": "Uso domiciliar"
+            },
+            {
+              "medicamento": "Sais para Reidratação Oral",
+              "via": "VO",
+              "posologia": "Ingerir 4,5 litros de líquidos/dia",
+              "horario_administracao": "Uso domiciliar"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000019",
+      "paciente": {
+        "id": "PAC-88919",
+        "nome_completo": "Tatiana Cardoso Pinto",
+        "cpf_mascarado": "***.533.316-**",
+        "cns": "7087004097118",
+        "data_nascimento": "1964-09-28",
+        "idade": 62,
+        "sexo_biologico": "F",
+        "tipo_sanguineo": "A-",
+        "alergias": [
+          "AINEs (Ibuprofeno)"
+        ],
+        "comorbidades_previas": [
+          "Dislipidemia (E78.5)",
+          "Tabagismo ativo (F17.2)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900419",
+          "data_entrada": "2026-11-21T16:00:00-03:00",
+          "data_alta": null,
+          "status": "Em Internação / UTI",
+          "classificacao_manchester": "Laranja (Muito Urgente)",
+          "protocolo_aplicado_id": "PROT-SEPSE-2026",
+          "profissional_responsavel": {
+            "nome": "Dr. Ricardo Mendes",
+            "conselho": "CRM-SP 145890",
+            "especialidade": "Medicina de Emergência"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "88/54",
+            "fc_bpm": 118,
+            "fr_irpm": 26,
+            "temperatura_c": 38.9,
+            "spo2_pct": 91,
+            "glasgow": 14,
+            "glicemia_mg_dl": 245
+          },
+          "evolucao_soap": {
+            "subjetivo": "Familiar relata febre alta há 24h, disúria há 3 dias e sonolência progressiva iniciada hoje.",
+            "objetivo": "Paciente torporosa, taquipneica, extremidades frias, TEC 4s. Punho-percussão lombar positiva à direita.",
+            "avaliacao": "Choque séptico de provável foco urinário (Pielonefrite aguda).",
+            "plano": "Aberto Protocolo de Sepse. Coletadas hemoculturas, urinocultura e lactato. Iniciado Ceftriaxona 2g EV e expansão volêmica."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40302190",
+              "nome": "Lactato Arterial",
+              "resultado": "4.6 mmol/L",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40304361",
+              "nome": "Hemograma Completo",
+              "resultado": "Leucócitos 21.400/mm³ com 14% de bastões",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40310124",
+              "nome": "Hemocultura (2 amostras)",
+              "resultado": "Aguardando incubação",
+              "status": "Em análise"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Ceftriaxona 2g",
+              "via": "EV",
+              "posologia": "2g de 24/24h",
+              "horario_administracao": "18:45"
+            },
+            {
+              "medicamento": "Soro Fisiológico 0,9%",
+              "via": "EV",
+              "posologia": "1800mL correr em 1 hora",
+              "horario_administracao": "18:30"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000020",
+      "paciente": {
+        "id": "PAC-88920",
+        "nome_completo": "Diego Fernando Lima",
+        "cpf_mascarado": "***.629.562-**",
+        "cns": "7040584480151",
+        "data_nascimento": "1973-11-21",
+        "idade": 53,
+        "sexo_biologico": "M",
+        "tipo_sanguineo": "A-",
+        "alergias": [],
+        "comorbidades_previas": [
+          "Dislipidemia (E78.5)",
+          "Tabagismo ativo (F17.2)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900420",
+          "data_entrada": "2026-11-21T07:00:00-03:00",
+          "data_alta": "2026-11-21T12:00:00-03:00",
+          "status": "Alta com encaminhamento ambulatorial",
+          "classificacao_manchester": "Amarelo (Urgente)",
+          "protocolo_aplicado_id": "PROT-HAS-DESCOMP-2026",
+          "profissional_responsavel": {
+            "nome": "Dra. Fernanda Lima",
+            "conselho": "CRM-SP 189321",
+            "especialidade": "Clínica Médica"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "190/115",
+            "fc_bpm": 88,
+            "fr_irpm": 16,
+            "temperatura_c": 36.5,
+            "spo2_pct": 97,
+            "glasgow": 15,
+            "glicemia_mg_dl": 104
+          },
+          "evolucao_soap": {
+            "subjetivo": "Paciente refere cefaleia occipital leve após estresse emocional. Relata ter interrompido uso de Losartana há 2 semanas.",
+            "objetivo": "Lúcido, orientado, corado. Ausculta cardíaca rítmica em 2T sem sopros. Exame neurológico sumário normal.",
+            "avaliacao": "Urgência hipertensiva por má adesão medicamentosa, sem sinais de lesão aguda de órgão-alvo.",
+            "plano": "Mantido em repouso, administrado Captopril 25mg VO. Reavaliado após 60 min com PA 148/92 mmHg. Alta orientada."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40101010",
+              "nome": "Eletrocardiograma (ECG) 12 derivações",
+              "resultado": "Ritmo sinusal, sem sinais de isquemia aguda",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Captopril 25mg",
+              "via": "VO",
+              "posologia": "1 comprimido dose única no PS",
+              "horario_administracao": "20:25"
+            },
+            {
+              "medicamento": "Losartana Potássica 50mg",
+              "via": "VO",
+              "posologia": "1 comprimido de 12/12h (uso contínuo)",
+              "horario_administracao": "Receita externa"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000021",
+      "paciente": {
+        "id": "PAC-88921",
+        "nome_completo": "Vanessa Teixeira Moura",
+        "cpf_mascarado": "***.702.325-**",
+        "cns": "7018620819030",
+        "data_nascimento": "1949-10-18",
+        "idade": 77,
+        "sexo_biologico": "F",
+        "tipo_sanguineo": "O+",
+        "alergias": [],
+        "comorbidades_previas": [
+          "Hipertensão Arterial (I10)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900421",
+          "data_entrada": "2026-11-21T04:00:00-03:00",
+          "data_alta": null,
+          "status": "Em Observação / Sala Vermelha",
+          "classificacao_manchester": "Laranja (Muito Urgente)",
+          "protocolo_aplicado_id": "PROT-DOR-TORACICA-2026",
+          "profissional_responsavel": {
+            "nome": "Dr. Alexandre Nogueira",
+            "conselho": "CRM-SP 112450",
+            "especialidade": "Cardiologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "154/96",
+            "fc_bpm": 102,
+            "fr_irpm": 20,
+            "temperatura_c": 36.4,
+            "spo2_pct": 95,
+            "glasgow": 15,
+            "glicemia_mg_dl": 138
+          },
+          "evolucao_soap": {
+            "subjetivo": "Dor retroesternal em aperto iniciada há 40 minutos em repouso, irradiada para ombro esquerdo, associada a sudorese fria.",
+            "objetivo": "Ansioso, sudoreico, ritmo cardíaco regular sem sopros, pulmões limpos.",
+            "avaliacao": "Síndrome Coronariana Aguda sem supra de ST a esclarecer.",
+            "plano": "Realizado ECG em 6 min (infradesnivelamento de ST em V4-V6). Administrado AAS 300mg + Clopidogrel 300mg. Solicitada Troponina seriada."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40101010",
+              "nome": "Eletrocardiograma (ECG) 12 derivações",
+              "resultado": "Infradesnivelamento de ST de 1,5mm em parede anterior",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40302580",
+              "nome": "Troponina Ultrassensível (0h)",
+              "resultado": "68 ng/L (Elevada)",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Ácido Acetilsalicílico 100mg",
+              "via": "VO",
+              "posologia": "3 comprimidos mastigáveis agora",
+              "horario_administracao": "14:12"
+            },
+            {
+              "medicamento": "Clopidogrel 75mg",
+              "via": "VO",
+              "posologia": "4 comprimidos agora",
+              "horario_administracao": "14:15"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000022",
+      "paciente": {
+        "id": "PAC-88922",
+        "nome_completo": "Thiago Moreira Gomes",
+        "cpf_mascarado": "***.343.385-**",
+        "cns": "7077297747111",
+        "data_nascimento": "1950-06-03",
+        "idade": 76,
+        "sexo_biologico": "M",
+        "tipo_sanguineo": "A-",
+        "alergias": [
+          "Sulfametoxazol + Trimetoprima"
+        ],
+        "comorbidades_previas": [
+          "Diabetes Mellitus Tipo 2 (E11)",
+          "Hipertensão Arterial (I10)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900422",
+          "data_entrada": "2026-11-22T04:00:00-03:00",
+          "data_alta": null,
+          "status": "Transferido para Unidade de AVC",
+          "classificacao_manchester": "Vermelho (Emergência)",
+          "protocolo_aplicado_id": "PROT-AVC-ISQ-2026",
+          "profissional_responsavel": {
+            "nome": "Dra. Camila Vasconcelos",
+            "conselho": "CRM-SP 167892",
+            "especialidade": "Neurologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "176/98",
+            "fc_bpm": 84,
+            "fr_irpm": 18,
+            "temperatura_c": 36.6,
+            "spo2_pct": 96,
+            "glasgow": 13,
+            "glicemia_mg_dl": 118
+          },
+          "evolucao_soap": {
+            "subjetivo": "Início súbito de hemiparesia direita e disartria há 1 hora e 15 minutos, presenciado pelo cônjuge.",
+            "objetivo": "NIHSS = 9 (desvio de rima labial, hemiparesia braquiocrural direita grau 2, disartria moderada).",
+            "avaliacao": "Acidente Vascular Cerebral Isquêmico Agudo em janela terapêutica.",
+            "plano": "TC de crânio sem sangramento (ASPECTS 10). Iniciada trombólise venosa com Alteplase dentro de 42 minutos da porta."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "41001010",
+              "nome": "TC de Crânio sem Contraste",
+              "resultado": "Ausência de hemorragia intracraniana",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40304361",
+              "nome": "Coagulograma e Plaquetas",
+              "resultado": "INR 1.05, Plaquetas 230.000/mm³",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Alteplase 50mg",
+              "via": "EV",
+              "posologia": "0,9 mg/kg (10% bolus, restante em 60 min)",
+              "horario_administracao": "10:42"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000023",
+      "paciente": {
+        "id": "PAC-88923",
+        "nome_completo": "Gabriela Nascimento Freitas",
+        "cpf_mascarado": "***.903.584-**",
+        "cns": "7069302748061",
+        "data_nascimento": "1994-10-19",
+        "idade": 32,
+        "sexo_biologico": "F",
+        "tipo_sanguineo": "A-",
+        "alergias": [],
+        "comorbidades_previas": [
+          "Hipertensão Arterial (I10)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900423",
+          "data_entrada": "2026-11-22T08:00:00-03:00",
+          "data_alta": "2026-11-22T11:00:00-03:00",
+          "status": "Alta hospitalar após estabilização",
+          "classificacao_manchester": "Amarelo (Urgente)",
+          "protocolo_aplicado_id": "PROT-ASMA-AGUDA-2026",
+          "profissional_responsavel": {
+            "nome": "Dr. Paulo Roberto Farias",
+            "conselho": "CRM-SP 134901",
+            "especialidade": "Pneumologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "128/82",
+            "fc_bpm": 110,
+            "fr_irpm": 24,
+            "temperatura_c": 36.8,
+            "spo2_pct": 92,
+            "glasgow": 15,
+            "glicemia_mg_dl": 96
+          },
+          "evolucao_soap": {
+            "subjetivo": "Paciente asmático relata chiado no peito e falta de ar após exposição a poeira domiciliar há 4 horas.",
+            "objetivo": "Taquipneico, sibilos expiratórios difusos bilateralmente, sem tiragem intercostal grave.",
+            "avaliacao": "Exacerbação aguda de asma de intensidade moderada.",
+            "plano": "Realizados 3 ciclos de Salbutamol + Brometo de Ipratrópio e Prednisolona 40mg VO. Melhora importante da ausculta e SpO2 97% em ar ambiente."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40105075",
+              "nome": "Oximetria de Pulso Contínua",
+              "resultado": "SpO2 inicial 92%, pós-broncodilatador 97%",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Sulfato de Salbutamol 100mcg/dose",
+              "via": "Inalatória",
+              "posologia": "4 jatos a cada 20 min (3 ciclos)",
+              "horario_administracao": "16:10"
+            },
+            {
+              "medicamento": "Prednisolona 20mg",
+              "via": "VO",
+              "posologia": "2 comprimidos agora + 2 comp/dia por 5 dias",
+              "horario_administracao": "16:15"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000024",
+      "paciente": {
+        "id": "PAC-88924",
+        "nome_completo": "Leonardo Batista Dias",
+        "cpf_mascarado": "***.578.984-**",
+        "cns": "7017426324250",
+        "data_nascimento": "1990-07-12",
+        "idade": 36,
+        "sexo_biologico": "M",
+        "tipo_sanguineo": "O-",
+        "alergias": [],
+        "comorbidades_previas": [
+          "Asma brônquica na infância (J45.9)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900424",
+          "data_entrada": "2026-11-22T11:00:00-03:00",
+          "data_alta": "2026-11-22T16:00:00-03:00",
+          "status": "Alta com retorno agendado em 48h",
+          "classificacao_manchester": "Verde (Pouco Urgente)",
+          "protocolo_aplicado_id": "PROT-DENGUE-2026",
+          "profissional_responsavel": {
+            "nome": "Dra. Beatriz Guimarães",
+            "conselho": "CRM-SP 198443",
+            "especialidade": "Infectologia"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "116/74",
+            "fc_bpm": 92,
+            "fr_irpm": 18,
+            "temperatura_c": 38.2,
+            "spo2_pct": 98,
+            "glasgow": 15,
+            "glicemia_mg_dl": 91
+          },
+          "evolucao_soap": {
+            "subjetivo": "Febre de 38,5°C há 3 dias, mialgia intensa, cefaleia retro-orbitária. Nega dor abdominal, vômitos ou sangramentos.",
+            "objetivo": "Hidratado, mucosas coradas, prova do laço negativa, abdome flácido e indolor à palpação.",
+            "avaliacao": "Dengue provável sem sinais de alarme (Estadiamento Grupo A).",
+            "plano": "Hidratação oral vigorosa, sintomáticos (evitar AINEs/AAS), entrega de cartão de acompanhamento da dengue e retorno imediato se sinais de alarme."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40307891",
+              "nome": "Pesquisa de Antígeno NS1 Dengue",
+              "resultado": "Reagente",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40304361",
+              "nome": "Hemograma Completo",
+              "resultado": "Hematócrito 41%, Plaquetas 165.000/mm³",
+              "status": "Concluído"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Dipirona 500mg",
+              "via": "VO",
+              "posologia": "1 comprimido de 6/6h se dor ou febre",
+              "horario_administracao": "Uso domiciliar"
+            },
+            {
+              "medicamento": "Sais para Reidratação Oral",
+              "via": "VO",
+              "posologia": "Ingerir 4,5 litros de líquidos/dia",
+              "horario_administracao": "Uso domiciliar"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "prontuario_id": "PRONT-2026-000025",
+      "paciente": {
+        "id": "PAC-88925",
+        "nome_completo": "Helena Monteiro Araújo",
+        "cpf_mascarado": "***.354.296-**",
+        "cns": "7083831385071",
+        "data_nascimento": "1994-06-26",
+        "idade": 32,
+        "sexo_biologico": "F",
+        "tipo_sanguineo": "AB-",
+        "alergias": [],
+        "comorbidades_previas": [
+          "Asma brônquica na infância (J45.9)"
+        ]
+      },
+      "atendimentos": [
+        {
+          "atendimento_id": "ATD-900425",
+          "data_entrada": "2026-11-21T20:00:00-03:00",
+          "data_alta": null,
+          "status": "Em Internação / UTI",
+          "classificacao_manchester": "Laranja (Muito Urgente)",
+          "protocolo_aplicado_id": "PROT-SEPSE-2026",
+          "profissional_responsavel": {
+            "nome": "Dr. Ricardo Mendes",
+            "conselho": "CRM-SP 145890",
+            "especialidade": "Medicina de Emergência"
+          },
+          "triagem_sinais_vitais": {
+            "pa_mmhg": "88/54",
+            "fc_bpm": 118,
+            "fr_irpm": 26,
+            "temperatura_c": 38.9,
+            "spo2_pct": 91,
+            "glasgow": 14,
+            "glicemia_mg_dl": 245
+          },
+          "evolucao_soap": {
+            "subjetivo": "Familiar relata febre alta há 24h, disúria há 3 dias e sonolência progressiva iniciada hoje.",
+            "objetivo": "Paciente torporosa, taquipneica, extremidades frias, TEC 4s. Punho-percussão lombar positiva à direita.",
+            "avaliacao": "Choque séptico de provável foco urinário (Pielonefrite aguda).",
+            "plano": "Aberto Protocolo de Sepse. Coletadas hemoculturas, urinocultura e lactato. Iniciado Ceftriaxona 2g EV e expansão volêmica."
+          },
+          "exames_solicitados": [
+            {
+              "tuss": "40302190",
+              "nome": "Lactato Arterial",
+              "resultado": "4.6 mmol/L",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40304361",
+              "nome": "Hemograma Completo",
+              "resultado": "Leucócitos 21.400/mm³ com 14% de bastões",
+              "status": "Concluído"
+            },
+            {
+              "tuss": "40310124",
+              "nome": "Hemocultura (2 amostras)",
+              "resultado": "Aguardando incubação",
+              "status": "Em análise"
+            }
+          ],
+          "prescricoes_ativas": [
+            {
+              "medicamento": "Ceftriaxona 2g",
+              "via": "EV",
+              "posologia": "2g de 24/24h",
+              "horario_administracao": "18:45"
+            },
+            {
+              "medicamento": "Soro Fisiológico 0,9%",
+              "via": "EV",
+              "posologia": "1800mL correr em 1 hora",
+              "horario_administracao": "18:30"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

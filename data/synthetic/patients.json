@@ -1,0 +1,57 @@
+[
+  {
+    "synthetic": true,
+    "patient_id": "PATIENT-SYNTH-001",
+    "display_label": "Registro sintético de demonstração",
+    "records": [
+      {
+        "record_id": "RECORD-SYNTH-001",
+        "record_type": "demo_only",
+        "content": "Registro fictício sem dados clínicos, usado apenas para testar a leitura de um fixture."
+      }
+    ],
+    "encounters": [
+      {
+        "encounter_id": "ENCOUNTER-SYNTH-001",
+        "status": "open",
+        "exams": [
+          {
+            "exam_id": "EXAM-SYNTH-001",
+            "display_name": "Exame sintético de demonstração A",
+            "status": "pending"
+          },
+          {
+            "exam_id": "EXAM-SYNTH-002",
+            "display_name": "Exame sintético de demonstração B",
+            "status": "completed"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "synthetic": true,
+    "patient_id": "PATIENT-SYNTH-002",
+    "display_label": "Registro sintético sem exames pendentes",
+    "records": [
+      {
+        "record_id": "RECORD-SYNTH-002",
+        "record_type": "demo_only",
+        "content": "Fixture fictício usado para demonstrar um atendimento sem exames pendentes."
+      }
+    ],
+    "encounters": [
+      {
+        "encounter_id": "ENCOUNTER-SYNTH-002",
+        "status": "closed",
+        "exams": [
+          {
+            "exam_id": "EXAM-SYNTH-003",
+            "display_name": "Exame sintético concluído",
+            "status": "completed"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hospital-medical-assistant"
+version = "0.1.0"
+description = "Academic prototype of a source-grounded medical assistant."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "langchain-core>=1.6,<2.0",
+    "langgraph>=1.2,<2.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8", "jsonschema>=4.21,<5"]
+clinical-import = ["jsonschema>=4.21,<5"]
+ui = ["streamlit>=1.42,<2.0"]
+training = [
+    "numpy==2.5.5",
+    "torch==2.13.0",
+    "transformers==4.57.6",
+    "peft==0.22.0",
+    "accelerate==1.16.0",
+    "bitsandbytes==0.50.2",
+]
+translation = [
+    "ctranslate2==4.9.1",
+    "sentencepiece==0.2.3",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

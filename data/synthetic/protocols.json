@@ -1,0 +1,11 @@
+[
+  {
+    "synthetic": true,
+    "id": "DOC-SYNTH-001",
+    "title": "Documento fictício para teste de recuperação",
+    "version": "0.0-demo",
+    "date": null,
+    "section": "origem",
+    "text": "Conteúdo inteiramente fictício, criado apenas para testar recuperação e citação de fontes. Não contém orientação médica e não deve ser usado em atendimento."
+  }
+]
